@@ -1,4 +1,4 @@
-package com.single.point.usecases
+package com.single.point.feature_taskcreate.domine.usecases
 
 import com.single.point.core.data.database.Task
 import com.single.point.core.presentation.util.FieldStatus
