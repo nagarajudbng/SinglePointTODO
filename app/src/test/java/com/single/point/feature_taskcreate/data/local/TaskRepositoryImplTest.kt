@@ -5,6 +5,7 @@ import com.single.point.core.data.database.Task
 import com.single.point.core.data.database.TaskDao
 import com.single.point.feature_taskcreate.domine.repository.TaskRepository
 import com.single.point.feature_taskcreate.data.TaskRepositoryImpl
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -39,5 +40,17 @@ class TaskRepositoryImplTest {
         `when`(taskDao.insertTask(task)).thenReturn(id)
         var  taskId = repository.insertTask(task)
         assertEquals(id,taskId)
+    }
+    @Test(expected = Exception::class)
+    fun testAddTaskThrowException() = runBlocking {
+        val task = Task(id = 1, title = "Error", description = "Test Task")
+        val exceptionMessage = "Error inserting task"
+        val  exception = Exception(exceptionMessage)
+        `when`(appDatabase.taskDao).thenReturn(taskDao)
+        `when`(taskDao.insertTask(task)).thenThrow(exception)
+
+        val e = repository.insertTask(task)
+        assertEquals(e,exception)
+
     }
 }
