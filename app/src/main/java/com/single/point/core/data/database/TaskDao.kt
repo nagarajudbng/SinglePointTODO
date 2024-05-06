@@ -7,7 +7,7 @@ import androidx.room.Insert
 @Dao
 interface TaskDao {
     @Insert
-    suspend fun insertTask(task:Task):Integer
+    suspend fun insertTask(task:Task):Long
 
 
 }
