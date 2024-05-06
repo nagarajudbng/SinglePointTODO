@@ -85,6 +85,6 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
-
-
+    //coroutine test
+    testImplementation(libs.kotlinx.coroutines.test)
 }
