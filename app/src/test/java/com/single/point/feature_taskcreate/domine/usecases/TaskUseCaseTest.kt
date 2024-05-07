@@ -4,12 +4,16 @@ import com.single.point.core.data.database.Task
 import com.single.point.core.presentation.FieldStatus
 import com.single.point.feature_taskcreate.data.TaskRepositoryImpl
 import com.single.point.feature_taskcreate.presentation.util.TaskResult
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.InjectMocks
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
@@ -50,5 +54,19 @@ class TaskUseCaseTest{
         var result = taskUseCase.validate(task)
         assertEquals(FieldStatus.FieldFilled, result.title)
         assertEquals(true, result.isValid)
+    }
+
+    @Test
+    fun taskGetList()= runBlocking{
+        var taskList = listOf(
+            Task(id = 1, title = "title 1", description = "Test Task"),
+            Task(id = 2, title = "title 2", description = "Test Task"),
+            Task(id = 3, title = "title 3", description = "Test Task")
+        )
+
+        `when`(repository.getTaskList()).thenReturn(flowOf(taskList))
+        var list = taskUseCase.getTaskList()
+        verify(repository.getTaskList())
+        assertEquals(taskList, list.first())
     }
 }
