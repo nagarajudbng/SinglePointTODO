@@ -111,12 +111,12 @@ fun TaskCreateScreen(
 
                 textStyle = TextStyle(
                     color = Black,
-//                style = MaterialTheme.typography.bodyMedium,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.Light,
                     fontSize = with(LocalDensity.current) { 14.sp }
 
                 ),
+                maxLines = 1,
                 label = {
                     Text(
                         text = "Title",
@@ -144,6 +144,7 @@ fun TaskCreateScreen(
                 onValueChange = {
                     viewModel.onEvent(TaskEvent.EnteredDescription(it))
                 },
+                maxLines= 1,
                 textStyle = TextStyle(
                     color = Black,
                     fontFamily = FontFamily.Monospace,
@@ -178,12 +179,13 @@ fun TaskCreateScreen(
                 verticalAlignment = Alignment.Bottom
             ) {
                 Button(
-                    modifier = Modifier.width(100.dp),
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(bottom = 16.dp),
                     onClick = {
                         viewModel.onEvent(TaskEvent.AddTask)
                     }
                 ) {
-                    Text(text = "ADD")
+                    Text(text = "ADD TODO")
                 }
             }
         }

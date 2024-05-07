@@ -44,7 +44,7 @@ class TaskUseCaseTest{
 
     @Test
     fun taskValidateWithError()= runBlockingTest{
-        var task = Task(title="Error",description="Description")
+        var task = Task(title="",description="Description")
         var result = taskUseCase.validate(task)
         assertEquals(FieldStatus.FieldEmpty,result.title)
         assertEquals(false, result.isValid)

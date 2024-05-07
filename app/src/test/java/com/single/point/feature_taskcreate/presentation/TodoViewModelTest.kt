@@ -4,10 +4,15 @@ import com.single.point.core.data.database.Task
 import com.single.point.core.presentation.FieldStatus
 import com.single.point.feature_taskcreate.domine.usecases.TaskUseCase
 import com.single.point.feature_taskcreate.presentation.util.TaskResult
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -31,10 +36,11 @@ class TodoViewModelTest {
     @Before
     fun setUp(){
         MockitoAnnotations.initMocks(this)
+        Dispatchers.setMain(TestCoroutineDispatcher())
     }
 
     @Test
-    fun insertTaskSuccess()= runBlockingTest{
+    fun testInsertTaskSuccess()= runBlockingTest{
        var task = Task(title="Title", description = "Description")
         var taskResult = TaskResult(result = 1L)
         `when`(taskUseCase.insertTask(task)).thenReturn(taskResult)
@@ -42,7 +48,7 @@ class TodoViewModelTest {
         Assert.assertEquals(taskResult, result)
     }
     @Test
-    fun insertTaskError()= runBlockingTest{
+    fun testInsertTaskError()= runBlockingTest{
         var task = Task(title="Error", description = "Description")
         var taskResult = TaskResult(isValid = false, title = FieldStatus.FieldEmpty)
         `when`(taskUseCase.insertTask(task)).thenReturn(taskResult)
@@ -52,7 +58,7 @@ class TodoViewModelTest {
     }
 
     @Test
-    fun getTaskList()= runBlocking {
+    fun testGetTaskList()= runBlockingTest {
         var taskList = listOf(
             Task(id = 1, title = "title 1", description = "Test Task"),
             Task(id = 2, title = "title 2", description = "Test Task"),
@@ -61,6 +67,10 @@ class TodoViewModelTest {
         `when` (taskUseCase.getTaskList()).thenReturn(flowOf(taskList))
         var list = todoViewModel.getTaskList()
         Mockito.verify(taskUseCase).getTaskList()
-//        Assert.assertEquals(taskList, list.first())
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 }
