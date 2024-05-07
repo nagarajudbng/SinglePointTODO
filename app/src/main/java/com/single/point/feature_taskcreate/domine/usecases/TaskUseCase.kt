@@ -1,27 +1,25 @@
 package com.single.point.feature_taskcreate.domine.usecases
 
 import com.single.point.core.data.database.Task
-import com.single.point.core.data.database.TaskDao
-import com.single.point.core.presentation.util.FieldStatus
-import com.single.point.feature_taskcreate.data.TaskRepositoryImpl
+import com.single.point.core.presentation.FieldStatus
 import com.single.point.feature_taskcreate.domine.repository.TaskRepository
 import com.single.point.feature_taskcreate.presentation.util.TaskResult
+import javax.inject.Inject
 
 // Created by Nagaraju Deshetty on 07/05/24.
-class TaskUseCase(
+class TaskUseCase @Inject constructor(
     private val repository: TaskRepository
 ) {
 
     suspend fun validate(task: Task): TaskResult {
         var taskResult=TaskResult()
-        if(task.title?.isEmpty() == true
-            || task.title.equals("Error")) {
-            taskResult.title = FieldStatus.FieldEmpty
-            taskResult.isValid = false
-        } else {
-            taskResult.title = FieldStatus.FieldFilled
-            taskResult.isValid = true
-        }
+        taskResult.title = if(task.title?.isEmpty() == true || task.title.equals("Error"))
+            FieldStatus.FieldEmpty else FieldStatus.FieldFilled
+        taskResult.description = if(task.description?.isEmpty() == true || task.description.equals("Error"))
+            FieldStatus.FieldEmpty else FieldStatus.FieldFilled
+        taskResult.isValid = !(taskResult.title == FieldStatus.FieldEmpty
+                ||taskResult.description == FieldStatus.FieldEmpty)
+
         return taskResult
 
 

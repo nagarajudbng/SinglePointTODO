@@ -44,6 +44,7 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerVersion = "1.5.21"
     }
     packaging {
         resources {
@@ -84,7 +85,7 @@ dependencies {
     //hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
-
+    implementation(libs.hilt.navigation.compose)
     //coroutine test
     testImplementation(libs.kotlinx.coroutines.test)
 }

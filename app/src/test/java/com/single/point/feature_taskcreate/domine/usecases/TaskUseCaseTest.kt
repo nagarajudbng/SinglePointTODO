@@ -1,9 +1,8 @@
 package com.single.point.feature_taskcreate.domine.usecases
 
 import com.single.point.core.data.database.Task
-import com.single.point.core.presentation.util.FieldStatus
+import com.single.point.core.presentation.FieldStatus
 import com.single.point.feature_taskcreate.data.TaskRepositoryImpl
-import com.single.point.feature_taskcreate.domine.usecases.TaskUseCase
 import com.single.point.feature_taskcreate.presentation.util.TaskResult
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals

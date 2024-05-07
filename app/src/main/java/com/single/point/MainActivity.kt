@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.single.point.navigation.AppNavHost
 import com.single.point.ui.theme.MainActivityTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +26,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    var navController = rememberNavController()
+                    AppNavHost(navController = navController)
                 }
             }
         }
