@@ -1,5 +1,6 @@
 package com.single.point.feature_taskcreate.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -67,11 +68,14 @@ fun HomeScreen(
         topBar = {
             TopBarView(viewModel)
         },
+
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
                     onNavigation("CreateTask")
-                }
+                },
+                containerColor = Color(0xFF396803)
+//                Modifier.background(Color(0xFF396803))
             ) {
                 Icon(Icons.Filled.Add,"")
             }
