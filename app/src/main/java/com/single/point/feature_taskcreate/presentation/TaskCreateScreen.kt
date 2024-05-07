@@ -72,19 +72,9 @@ fun TaskCreateScreen(
                 is UiEvent.NavigateUp -> {
                     onNavigation("Back")
                 }
-
                 is UiEvent.ShowSnackBar -> {
                     onSnackBarMessage(event.uiText.asString(context))
                 }
-
-                is UiEvent.ShowProgressDialog -> {
-
-                }
-
-                is UiEvent.ShowDialog -> {
-
-                }
-
                 else -> {}
             }
 

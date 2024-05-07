@@ -55,18 +55,9 @@ fun HomeScreen(
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
-                is UiEvent.NavigateUp -> {
-
-                }
-
                 is UiEvent.ShowSnackBar -> {
                     onSnackBarMessage(event.uiText.asString(context))
                 }
-
-                is UiEvent.ShowDialog -> {
-
-                }
-
                 else -> {}
             }
 

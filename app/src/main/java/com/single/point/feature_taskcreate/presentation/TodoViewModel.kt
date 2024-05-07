@@ -41,7 +41,6 @@ class TodoViewModel @Inject constructor(
     private val _taskCreationState = mutableStateOf("Exception")
     val taskCreationState = _taskCreationState
 
-
     private val _dialogState = mutableStateOf(false)
     val dialogState = _dialogState
 
@@ -124,21 +123,8 @@ class TodoViewModel @Inject constructor(
         when(event){
             is SearchEvent.OnSearchQuery->{
                 searchQuery.value = event.query
-//                if(event.query.length>=2) {
-//
-//                }
-//                    viewModelScope.launch {
-//                        todoList.value.filter {  task->
-//                            task.title?.lowercase()?.contains(searchQuery.value.lowercase()) == true
-//                        }
-//                    }
-//                } else {
-//                    _movies.value = emptyList()
-//                }
             }
             is SearchEvent.OnSearchStart->{
-                Log.d("SearchEvent","SearchEvent called")
-                Log.d("SearchEvent","SearchEvent Before Filter ${_todoList.value.size}")
                 viewModelScope.launch {
                     taskUseCase.searchQuery(event.query).flowOn(Dispatchers.IO).collect{
                         todoList.value = it

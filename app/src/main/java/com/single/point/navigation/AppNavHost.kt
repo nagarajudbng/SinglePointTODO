@@ -33,7 +33,6 @@ fun AppNavHost(
     ) {
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-    val openAlertDialog = remember { mutableStateOf(false) }
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackBarHostState)
@@ -61,11 +60,7 @@ fun AppNavHost(
                 composable(NavigationItem.ADDTASK.route) {
                     TaskCreateScreen(
                         onNavigation = {
-//                            if(it.equals("Exception"){
-//                                    openAlertDialog = true
-//                            }  else {
-                                navController.popBackStack()
-//                            }
+                            navController.popBackStack()
                         },
                         onSnackBarMessage={
                             scope.launch {

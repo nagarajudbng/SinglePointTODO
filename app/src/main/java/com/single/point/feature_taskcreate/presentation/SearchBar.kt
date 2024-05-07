@@ -92,7 +92,7 @@ fun SearchBar(
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn((searchBoxHeight+5).dp)
+                .heightIn((searchBoxHeight+4).dp)
                 .onFocusChanged {
                     Log.d("SearchBar", "value = " + focusState)
                     onFocusChange(it.isFocused)
@@ -159,7 +159,7 @@ fun SearchBar(
 
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.Light,
-                    fontSize = 18.sp
+                    fontSize = 16.sp
                 )
             }
         )
@@ -191,23 +191,3 @@ fun startSearchAfterDelay(
     }
 }
 
-@Composable
-fun SearchTime(
-    onSearchStart: (String) -> Unit,
-    searchQuery: String,
-    duration:Int
-) {
-    var timeLeft by remember { mutableStateOf(duration) }
-    Log.d("SearchEvent","SearchTime called")
-    LaunchedEffect(key1 = timeLeft) {
-        while (timeLeft > 0) {
-            delay(1000L)
-            timeLeft--
-            Log.d("SearchEvent","SearchTime timer${timeLeft}")
-            if(timeLeft==0){
-                Log.d("SearchEvent","SearchTime if condition timer${searchQuery}")
-                onSearchStart(searchQuery)
-            }
-        }
-    }
-}
