@@ -14,6 +14,7 @@ import org.junit.Test
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
@@ -66,7 +67,7 @@ class TaskUseCaseTest{
 
         `when`(repository.getTaskList()).thenReturn(flowOf(taskList))
         var list = taskUseCase.getTaskList()
-        verify(repository.getTaskList())
+        verify(repository).getTaskList()
         assertEquals(taskList, list.first())
     }
 }

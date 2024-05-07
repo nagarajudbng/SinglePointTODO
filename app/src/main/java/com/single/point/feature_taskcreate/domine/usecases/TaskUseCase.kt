@@ -4,6 +4,7 @@ import com.single.point.core.data.database.Task
 import com.single.point.core.presentation.FieldStatus
 import com.single.point.feature_taskcreate.domine.repository.TaskRepository
 import com.single.point.feature_taskcreate.presentation.util.TaskResult
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 // Created by Nagaraju Deshetty on 07/05/24.
@@ -27,5 +28,8 @@ class TaskUseCase @Inject constructor(
     suspend fun insertTask(task:Task): TaskResult{
         val result = repository.insertTask(task)
         return TaskResult(result = result)
+    }
+    suspend fun getTaskList(): Flow<List<Task>>{
+        return repository.getTaskList()
     }
 }
