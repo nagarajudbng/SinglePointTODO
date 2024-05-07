@@ -56,9 +56,9 @@ class TodoViewModel @Inject constructor(
     private val _topBarState = mutableStateOf(false)
     val topBarState = _topBarState
 
-//    init{
-//        getTaskList()
-//    }
+    init{
+        getTaskList()
+    }
 
     fun onEvent(event:TaskEvent){
         when(event){
