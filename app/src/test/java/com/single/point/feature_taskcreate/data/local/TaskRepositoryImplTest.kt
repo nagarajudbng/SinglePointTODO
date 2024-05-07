@@ -5,6 +5,7 @@ import com.single.point.core.data.database.Task
 import com.single.point.core.data.database.TaskDao
 import com.single.point.feature_taskcreate.domine.repository.TaskRepository
 import com.single.point.feature_taskcreate.data.TaskRepositoryImpl
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
@@ -13,6 +14,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.InjectMocks
 import org.mockito.Mock
+import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
@@ -62,7 +64,11 @@ class TaskRepositoryImplTest {
             Task(id = 2, title = "title 2", description = "Test Task"),
             Task(id = 3, title = "title 3", description = "Test Task")
             )
-        `when`(taskDao.getList()).thenReturn(flowOf(taskList))
+        `when`(appDatabase.taskDao).thenReturn(taskDao)
+        `when`(taskDao.getTaskList()).thenReturn(flowOf(taskList))
         val list = repository.getTaskList()
+
+        verify(appDatabase.taskDao).getTaskList()
+        assertEquals(taskList, list.first())
     }
 }
