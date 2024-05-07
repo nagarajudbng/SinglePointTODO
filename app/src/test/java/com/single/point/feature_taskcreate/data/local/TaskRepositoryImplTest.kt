@@ -5,6 +5,7 @@ import com.single.point.core.data.database.Task
 import com.single.point.core.data.database.TaskDao
 import com.single.point.feature_taskcreate.domine.repository.TaskRepository
 import com.single.point.feature_taskcreate.data.TaskRepositoryImpl
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
@@ -52,5 +53,16 @@ class TaskRepositoryImplTest {
         val e = repository.insertTask(task)
         assertEquals(e,exception)
 
+    }
+
+    @Test
+    fun testGetTaskList() = runBlocking {
+        var taskList = listOf(
+            Task(id = 1, title = "title 1", description = "Test Task"),
+            Task(id = 2, title = "title 2", description = "Test Task"),
+            Task(id = 3, title = "title 3", description = "Test Task")
+            )
+        `when`(taskDao.getList()).thenReturn(flowOf(taskList))
+        val list = repository.getTaskList()
     }
 }
