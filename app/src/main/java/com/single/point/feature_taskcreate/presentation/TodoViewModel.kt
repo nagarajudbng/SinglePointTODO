@@ -1,5 +1,6 @@
 package com.single.point.feature_taskcreate.presentation
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,7 +45,10 @@ class TodoViewModel @Inject constructor(
     private val _dialogState = mutableStateOf(false)
     val dialogState = _dialogState
 
-    private val _todoList = mutableStateOf<List<Task>>(emptyList())
+    private val _masterTodoList = mutableStateOf<List<Task>>(emptyList())
+    val masterTodoList = _masterTodoList
+
+   private val _todoList = mutableStateOf<List<Task>>(emptyList())
     val todoList = _todoList
 
     private val _searchQuery = mutableStateOf("")
@@ -124,14 +128,25 @@ class TodoViewModel @Inject constructor(
             is SearchEvent.OnSearchQuery->{
                 searchQuery.value = event.query
 //                if(event.query.length>=2) {
+//
+//                }
 //                    viewModelScope.launch {
-                        todoList.value.filter {  task->
-                            task.title?.lowercase()?.contains(searchQuery.value.lowercase()) == true
-                        }
+//                        todoList.value.filter {  task->
+//                            task.title?.lowercase()?.contains(searchQuery.value.lowercase()) == true
+//                        }
 //                    }
 //                } else {
 //                    _movies.value = emptyList()
 //                }
+            }
+            is SearchEvent.OnSearchStart->{
+                Log.d("SearchEvent","SearchEvent called")
+                Log.d("SearchEvent","SearchEvent Before Filter ${_todoList.value.size}")
+                viewModelScope.launch {
+                   _todoList.value =  _masterTodoList.value.filter {
+                        it.title?.contains(event.query) == true
+                    }
+                }
             }
             is SearchEvent.OnFocusChange ->{
                 focusState.value = event.focus
@@ -140,6 +155,7 @@ class TodoViewModel @Inject constructor(
             is SearchEvent.OnClearPressed ->{
                 _searchQuery.value=""
                 _topBarState.value = false
+                _todoList.value = _masterTodoList.value
             }
 
         }
@@ -151,6 +167,7 @@ class TodoViewModel @Inject constructor(
      fun getTaskList() {
          viewModelScope.launch {
               taskUseCase.getTaskList().flowOn(Dispatchers.IO).collect{
+                  masterTodoList.value = it
                   todoList.value = it
               }
          }

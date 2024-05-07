@@ -116,6 +116,9 @@ fun TopBarView(viewModel: TodoViewModel){
         onSearchTextEntered = {
             viewModel.onSearchEvent(SearchEvent.OnSearchQuery(it))
         },
+        onSearchStart = {
+            viewModel.onSearchEvent(SearchEvent.OnSearchStart(it))
+        },
         onFocusChange = {
             viewModel.onSearchEvent((SearchEvent.OnFocusChange(it)))
         },
