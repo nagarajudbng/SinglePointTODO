@@ -12,6 +12,7 @@ import com.single.point.core.presentation.UiEvent
 import com.single.point.feature_taskcreate.domine.usecases.TaskUseCase
 import com.single.point.feature_taskcreate.presentation.util.TaskResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -76,6 +77,10 @@ class TodoViewModel @Inject constructor(
     }
     suspend fun insertTask(task: Task): TaskResult {
      return  taskUseCase.insertTask(task)
+    }
+
+    suspend fun getTaskList(): Flow<List<Task>> {
+        return taskUseCase.getTaskList()
     }
 
 }
