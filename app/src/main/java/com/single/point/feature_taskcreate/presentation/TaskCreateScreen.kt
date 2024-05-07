@@ -2,7 +2,6 @@ package com.single.point.feature_taskcreate.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Arrangement.Absolute.Center
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,10 +16,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -29,15 +28,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.single.point.R
+import com.single.point.core.presentation.FieldStatus
 import com.single.point.core.presentation.UiEvent
+import com.single.point.core.presentation.util.asString
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 
@@ -45,24 +53,28 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 @Preview
 fun TaskCreateScreenPreview() {
-    TaskCreateScreen(onNavigation = {})
+    TaskCreateScreen(onNavigation = {},onSnackBarMessage={
+
+    })
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskCreateScreen(
-    onNavigation: (String) -> Unit
+    onNavigation: (String) -> Unit,
+    onSnackBarMessage:(String)->Unit
 ) {
     var viewModel = hiltViewModel<TodoViewModel>()
+    var  context = LocalContext.current
     ProgressDialogBox(viewModel = viewModel)
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
                 is UiEvent.NavigateUp -> {
-                    onNavigation
+                    onNavigation("Back")
                 }
 
                 is UiEvent.ShowSnackBar -> {
-
+                    onSnackBarMessage(event.uiText.asString(context))
                 }
 
                 is UiEvent.ShowProgressDialog -> {
@@ -80,16 +92,12 @@ fun TaskCreateScreen(
     }
     Scaffold(
         topBar = {
-            TopAppBar(
-                modifier = Modifier.background(Color.Green),
-                title = {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = "ADD TODO",
-
-                        textAlign = TextAlign.Center
-                    )
-                }
+            HomeAppBar(
+                title = stringResource(id = R.string.add_todo_title),
+                isSearchEnable = false,
+                searchClick = {
+                },
+                backClick = {}
             )
         }
     ) {
@@ -103,13 +111,41 @@ fun TaskCreateScreen(
                     end = 16.dp
                 )
         ) {
+            Spacer(modifier = Modifier.height(10.dp))
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = viewModel.titleState.value.text,
                 onValueChange = {
                     viewModel.onEvent(TaskEvent.EnteredTitle(it))
                 },
-                label = { Text(text = "Title") }
+
+                textStyle = TextStyle(
+                    color = Black,
+//                style = MaterialTheme.typography.bodyMedium,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Light,
+                    fontSize = with(LocalDensity.current) { 14.sp }
+
+                ),
+                label = {
+                    Text(
+                        text = "Title",
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Light,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurface,
+
+                        )
+                },
+                supportingText = {
+                    if (viewModel.titleState.value.error == FieldStatus.FieldEmpty) {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = "Title Required",
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                },
             )
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(
@@ -118,7 +154,32 @@ fun TaskCreateScreen(
                 onValueChange = {
                     viewModel.onEvent(TaskEvent.EnteredDescription(it))
                 },
-                label = { Text(text = "Description") }
+                textStyle = TextStyle(
+                    color = Black,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Light,
+                    fontSize = with(LocalDensity.current) { 14.sp }
+
+                ),
+                label = {
+                    Text(
+                        text = "Description",
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Light,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurface,
+
+                        )
+                },
+                supportingText = {
+                    if (viewModel.descState.value.error  == FieldStatus.FieldEmpty) {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = "Description Required",
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                },
             )
             Row(
                 modifier = Modifier
@@ -129,7 +190,6 @@ fun TaskCreateScreen(
                 Button(
                     modifier = Modifier.width(100.dp),
                     onClick = {
-
                         viewModel.onEvent(TaskEvent.AddTask)
                     }
                 ) {
@@ -171,7 +231,7 @@ fun DialogTime(viewModel:TodoViewModel){
             delay(1000L)
             timeLeft--
             if(timeLeft==0){
-                viewModel.dialogState.value=false
+                viewModel.onEvent(TaskEvent.DialogueEvent(false))
             }
         }
     }

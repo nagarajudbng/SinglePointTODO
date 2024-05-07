@@ -14,6 +14,10 @@ class TaskUseCase @Inject constructor(
 
     suspend fun validate(task: Task): TaskResult {
         var taskResult=TaskResult()
+
+        if (task.title?.contains("Error") == true) {
+            throw IllegalArgumentException("Title cannot contain 'Error' text.")
+        }
         taskResult.title = if(task.title?.isEmpty() == true || task.title.equals("Error"))
             FieldStatus.FieldEmpty else FieldStatus.FieldFilled
         taskResult.description = if(task.description?.isEmpty() == true || task.description.equals("Error"))

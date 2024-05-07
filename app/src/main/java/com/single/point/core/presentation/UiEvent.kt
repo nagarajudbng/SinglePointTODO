@@ -10,7 +10,7 @@ sealed class UiEvent: Event() {
     data class Navigate(val route:String):UiEvent()
     data class Loading(val isLoading:Boolean):UiEvent()
     data class ShowDialog(val message:String):UiEvent()
-    object NavigateUp:UiEvent()
+    data class NavigateUp(val message:String):UiEvent()
     object OnLogin:UiEvent()
     object UploadImage:UiEvent()
 }
