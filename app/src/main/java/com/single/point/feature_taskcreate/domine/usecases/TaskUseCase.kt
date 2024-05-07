@@ -36,4 +36,8 @@ class TaskUseCase @Inject constructor(
     suspend fun getTaskList(): Flow<List<Task>>{
         return repository.getTaskList()
     }
+
+     suspend fun searchQuery(query: String): Flow<List<Task>> {
+        return  repository.searchQuery(query)
+    }
 }

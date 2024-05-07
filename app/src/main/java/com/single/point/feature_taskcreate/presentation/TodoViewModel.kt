@@ -45,9 +45,6 @@ class TodoViewModel @Inject constructor(
     private val _dialogState = mutableStateOf(false)
     val dialogState = _dialogState
 
-    private val _masterTodoList = mutableStateOf<List<Task>>(emptyList())
-    val masterTodoList = _masterTodoList
-
    private val _todoList = mutableStateOf<List<Task>>(emptyList())
     val todoList = _todoList
 
@@ -143,8 +140,8 @@ class TodoViewModel @Inject constructor(
                 Log.d("SearchEvent","SearchEvent called")
                 Log.d("SearchEvent","SearchEvent Before Filter ${_todoList.value.size}")
                 viewModelScope.launch {
-                   _todoList.value =  _masterTodoList.value.filter {
-                        it.title?.contains(event.query) == true
+                    taskUseCase.searchQuery(event.query).flowOn(Dispatchers.IO).collect{
+                        todoList.value = it
                     }
                 }
             }
@@ -155,7 +152,7 @@ class TodoViewModel @Inject constructor(
             is SearchEvent.OnClearPressed ->{
                 _searchQuery.value=""
                 _topBarState.value = false
-                _todoList.value = _masterTodoList.value
+                getTaskList()
             }
 
         }
@@ -167,7 +164,6 @@ class TodoViewModel @Inject constructor(
      fun getTaskList() {
          viewModelScope.launch {
               taskUseCase.getTaskList().flowOn(Dispatchers.IO).collect{
-                  masterTodoList.value = it
                   todoList.value = it
               }
          }
