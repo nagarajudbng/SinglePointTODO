@@ -70,7 +70,7 @@ class HomeTodoViewModel @Inject constructor(
      fun getTaskList() {
          viewModelScope.launch {
               homeTodoUseCase.getTaskList().flowOn(Dispatchers.IO).collect{
-                  todoList.value = it
+                  todoList.value = it.reversed()
               }
          }
 
