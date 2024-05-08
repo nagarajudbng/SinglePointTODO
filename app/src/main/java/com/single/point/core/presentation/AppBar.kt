@@ -1,4 +1,4 @@
-package com.single.point.feature_taskcreate.presentation
+package com.single.point.core.presentation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.heightIn
@@ -24,12 +24,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
+import com.single.point.feature_todohome.presentation.searchBoxHeight
 
 // Created by Nagaraju Deshetty on 07/05/24.
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeAppBar(
+fun AppBar(
     title: String,
     modifier: Modifier = Modifier,
     searchClick: () -> Unit,
@@ -93,7 +94,7 @@ fun HomeAppBar(
 @Preview
 @Composable
 fun HomeAppBarPreview() {
-    HomeAppBar(
+    AppBar(
         title = "Romantic Comedy",
         searchClick = { },
         backClick = { },

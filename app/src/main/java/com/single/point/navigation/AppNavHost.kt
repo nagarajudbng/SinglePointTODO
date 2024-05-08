@@ -2,24 +2,19 @@ package com.single.point.navigation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.single.point.feature_taskcreate.presentation.HomeScreen
+import com.single.point.core.presentation.SharedViewModel
+import com.single.point.feature_todohome.presentation.HomeScreen
 import com.single.point.feature_taskcreate.presentation.TaskCreateScreen
 import kotlinx.coroutines.launch
 
@@ -33,6 +28,7 @@ fun AppNavHost(
     ) {
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val sharedViewModel = hiltViewModel<SharedViewModel>()
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackBarHostState)
@@ -47,6 +43,7 @@ fun AppNavHost(
 
                 composable(NavigationItem.HOME.route) {
                     HomeScreen(
+                        sharedViewModel,
                         onNavigation ={
                             navController.navigate(NavigationItem.ADDTASK.route)
                         },
@@ -59,6 +56,7 @@ fun AppNavHost(
                 }
                 composable(NavigationItem.ADDTASK.route) {
                     TaskCreateScreen(
+                        sharedViewModel,
                         onNavigation = {
                             navController.popBackStack()
                         },

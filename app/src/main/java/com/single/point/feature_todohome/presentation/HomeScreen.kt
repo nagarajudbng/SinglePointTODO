@@ -1,6 +1,5 @@
-package com.single.point.feature_taskcreate.presentation
+package com.single.point.feature_todohome.presentation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,7 +21,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,24 +35,29 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.single.point.R
 import com.single.point.core.data.database.Task
+import com.single.point.core.presentation.AppBar
+import com.single.point.core.presentation.SharedViewModel
 import com.single.point.core.presentation.UiEvent
 import com.single.point.core.presentation.util.asString
+import com.single.point.feature_taskcreate.presentation.TaskCreateScreen
 import kotlinx.coroutines.flow.collectLatest
 
 // Created by Nagaraju Deshetty on 07/05/24.
 @Composable
 @Preview
 fun HomeScreenPreview() {
-    TaskCreateScreen(onNavigation = {},onSnackBarMessage={})
+    TaskCreateScreen(hiltViewModel<SharedViewModel>(),onNavigation = {},onSnackBarMessage={})
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    sharedViewModel:SharedViewModel,
     onNavigation: (String) -> Unit,
     onSnackBarMessage:(String)->Unit
 ) {
-    var viewModel = hiltViewModel<TodoViewModel>()
+    var viewModel = hiltViewModel<TodoHomeViewModel>()
     var  context = LocalContext.current
+    AlertDialog(sharedViewModel)
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
@@ -94,13 +99,13 @@ fun HomeScreen(
     }
 }
 @Composable
-fun TopBarView(viewModel: TodoViewModel){
+fun TopBarView(viewModel: TodoHomeViewModel){
     var showSearch = viewModel.topBarState.value
     if(!showSearch) {
-        HomeAppBar(
+        AppBar(
             title = stringResource(id = R.string.app_bar_title),
             searchClick = {
-                viewModel.onEvent(TaskEvent.TopSearchSelected(true))
+                viewModel.onSearchEvent(SearchEvent.TopSearchSelected(true))
             },
             backClick = {},
             isSearchEnable = true
@@ -130,7 +135,7 @@ fun TopBarView(viewModel: TodoViewModel){
     }
 }
 @Composable
-fun showTodoList(viewModel: TodoViewModel){
+fun showTodoList(viewModel: TodoHomeViewModel){
 
     var todoList = viewModel.todoList.value
     if(todoList.size>0) {
@@ -192,7 +197,13 @@ fun ListItem(task: Task){
 }
 
 @Composable
-fun AlertDialog(shouldShowDialog: MutableState<Boolean>) {
+fun AlertDialog(viewModel: SharedViewModel) {
+    var shouldShowDialog = remember { mutableStateOf(false) }
+    LaunchedEffect(viewModel.messageState.value){
+        if(viewModel.messageState.value == "Exception") {
+            shouldShowDialog.value = true
+        }
+    }
     if (shouldShowDialog.value) {
         androidx.compose.material3.AlertDialog(
             onDismissRequest = {
@@ -204,6 +215,7 @@ fun AlertDialog(shouldShowDialog: MutableState<Boolean>) {
                 Button(
                     onClick = {
                         shouldShowDialog.value = false
+                        viewModel.messageState.value = ""
                     }
                 ) {
                     Text(

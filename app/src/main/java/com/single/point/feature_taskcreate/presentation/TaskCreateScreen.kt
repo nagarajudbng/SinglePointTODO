@@ -46,7 +46,9 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.single.point.R
+import com.single.point.core.presentation.AppBar
 import com.single.point.core.presentation.FieldStatus
+import com.single.point.core.presentation.SharedViewModel
 import com.single.point.core.presentation.UiEvent
 import com.single.point.core.presentation.util.asString
 import kotlinx.coroutines.delay
@@ -56,13 +58,16 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 @Preview
 fun TaskCreateScreenPreview() {
-    TaskCreateScreen(onNavigation = {},onSnackBarMessage={
+    TaskCreateScreen(
+        hiltViewModel<SharedViewModel>(),
+        onNavigation = {},onSnackBarMessage={
 
     })
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskCreateScreen(
+    sharedViewModel:SharedViewModel,
     onNavigation: (String) -> Unit,
     onSnackBarMessage:(String)->Unit
 ) {
@@ -73,10 +78,14 @@ fun TaskCreateScreen(
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
                 is UiEvent.NavigateUp -> {
+                    sharedViewModel.messageState.value = event.message
                     onNavigation("Back")
                 }
                 is UiEvent.ShowSnackBar -> {
                     onSnackBarMessage(event.uiText.asString(context))
+                }
+                is UiEvent.Message -> {
+//                    sharedViewModel.messageState.value = event.message
                 }
                 else -> {}
             }
@@ -85,7 +94,7 @@ fun TaskCreateScreen(
     }
     Scaffold(
         topBar = {
-            HomeAppBar(
+            AppBar(
                 title = stringResource(id = R.string.add_todo_title),
                 isSearchEnable = false,
                 searchClick = {
