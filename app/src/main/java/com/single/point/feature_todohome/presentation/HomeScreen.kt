@@ -55,7 +55,7 @@ fun HomeScreen(
     onNavigation: (String) -> Unit,
     onSnackBarMessage:(String)->Unit
 ) {
-    var viewModel = hiltViewModel<TodoHomeViewModel>()
+    var viewModel = hiltViewModel<HomeTodoViewModel>()
     var  context = LocalContext.current
     AlertDialog(sharedViewModel)
     LaunchedEffect(key1 = true) {
@@ -99,7 +99,7 @@ fun HomeScreen(
     }
 }
 @Composable
-fun TopBarView(viewModel: TodoHomeViewModel){
+fun TopBarView(viewModel: HomeTodoViewModel){
     var showSearch = viewModel.topBarState.value
     if(!showSearch) {
         AppBar(
@@ -135,7 +135,7 @@ fun TopBarView(viewModel: TodoHomeViewModel){
     }
 }
 @Composable
-fun showTodoList(viewModel: TodoHomeViewModel){
+fun showTodoList(viewModel: HomeTodoViewModel){
 
     var todoList = viewModel.todoList.value
     if(todoList.size>0) {

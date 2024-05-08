@@ -57,17 +57,4 @@ class TaskUseCaseTest{
         assertEquals(true, result.isValid)
     }
 
-    @Test
-    fun taskGetList()= runBlocking{
-        var taskList = listOf(
-            Task(id = 1, title = "title 1", description = "Test Task"),
-            Task(id = 2, title = "title 2", description = "Test Task"),
-            Task(id = 3, title = "title 3", description = "Test Task")
-        )
-
-        `when`(repository.getTaskList()).thenReturn(flowOf(taskList))
-        var list = taskUseCase.getTaskList()
-        verify(repository).getTaskList()
-        assertEquals(taskList, list.first())
-    }
 }

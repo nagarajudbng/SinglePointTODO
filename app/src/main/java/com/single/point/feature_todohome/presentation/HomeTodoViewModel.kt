@@ -4,7 +4,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.single.point.core.data.database.Task
-import com.single.point.core.domine.states.StandardTextFieldState
 import com.single.point.core.presentation.UiEvent
 import com.single.point.feature_todohome.domine.usecases.HomeTodoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TodoHomeViewModel @Inject constructor(
+class HomeTodoViewModel @Inject constructor(
     private var homeTodoUseCase: HomeTodoUseCase
 ):ViewModel(){
 

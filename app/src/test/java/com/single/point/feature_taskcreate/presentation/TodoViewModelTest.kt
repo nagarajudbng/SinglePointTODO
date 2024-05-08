@@ -57,17 +57,7 @@ class TodoViewModelTest {
         Assert.assertEquals(false, result.isValid)
     }
 
-    @Test
-    fun testGetTaskList()= runBlockingTest {
-        var taskList = listOf(
-            Task(id = 1, title = "title 1", description = "Test Task"),
-            Task(id = 2, title = "title 2", description = "Test Task"),
-            Task(id = 3, title = "title 3", description = "Test Task")
-        )
-        `when` (taskUseCase.getTaskList()).thenReturn(flowOf(taskList))
-        var list = todoViewModel.getTaskList()
-        Mockito.verify(taskUseCase).getTaskList()
-    }
+
 
     @After
     fun tearDown() {

@@ -33,11 +33,5 @@ class TaskUseCase @Inject constructor(
         val result = repository.insertTask(task)
         return TaskResult(result = result)
     }
-    suspend fun getTaskList(): Flow<List<Task>>{
-        return repository.getTaskList()
-    }
 
-     suspend fun searchQuery(query: String): Flow<List<Task>> {
-        return  repository.searchQuery(query)
-    }
 }
