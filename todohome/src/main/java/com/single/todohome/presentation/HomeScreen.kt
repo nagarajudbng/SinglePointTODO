@@ -34,9 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.single.core.data.database.Task
-import com.single.core.presentation.AppBar
 import com.single.core.presentation.SharedViewModel
-import com.single.core.presentation.UiEvent
 import com.single.core.presentation.util.asString
 import com.single.todohome.R
 import kotlinx.coroutines.flow.collectLatest
@@ -61,6 +59,7 @@ fun HomeScreen(
     var  context = LocalContext.current
     AlertDialog(sharedViewModel)
     LaunchedEffect(key1 = true) {
+        viewModel.getTaskList()
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
                 is com.single.core.presentation.UiEvent.ShowSnackBar -> {

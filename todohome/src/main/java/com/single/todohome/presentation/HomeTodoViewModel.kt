@@ -4,7 +4,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.single.core.data.database.Task
-import com.single.core.presentation.UiEvent
 import com.single.todohome.usecases.HomeTodoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -35,9 +34,9 @@ class HomeTodoViewModel @Inject constructor(
     val topBarState = _topBarState
 
 
-    init{
-        getTaskList()
-    }
+//    init{
+//        getTaskList()
+//    }
 
     fun onSearchEvent(event: SearchEvent){
 
