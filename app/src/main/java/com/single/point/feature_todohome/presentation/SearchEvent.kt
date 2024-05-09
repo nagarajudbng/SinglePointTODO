@@ -1,6 +1,6 @@
 package com.single.point.feature_todohome.presentation
 
-import com.single.point.feature_taskcreate.presentation.TaskEvent
+import com.single.todocreate.presentation.TaskEvent
 
 // Created by Nagaraju Deshetty on 07/05/24.
 sealed class SearchEvent(){

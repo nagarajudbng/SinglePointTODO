@@ -1,8 +1,9 @@
 package com.single.point.feature_taskcreate.presentation
 
 import com.single.core.data.database.Task
-import com.single.point.feature_taskcreate.domine.usecases.TaskUseCase
-import com.single.point.feature_taskcreate.presentation.util.TaskResult
+import com.single.core.presentation.FieldStatus
+import com.single.todocreate.domine.usecases.TaskUseCase
+import com.single.todocreate.presentation.util.TaskResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -27,10 +28,10 @@ import java.lang.reflect.Field
 class TodoViewModelTest {
 
     @Mock
-    private lateinit var taskUseCase: TaskUseCase
+    private lateinit var taskUseCase: com.single.todocreate.domine.usecases.TaskUseCase
 
     @InjectMocks
-    private lateinit var todoViewModel:TodoViewModel
+    private lateinit var todoViewModel: com.single.todocreate.presentation.TodoViewModel
 
     @Before
     fun setUp(){
@@ -41,7 +42,7 @@ class TodoViewModelTest {
     @Test
     fun testInsertTaskSuccess()= runBlockingTest{
        var task = Task(title = "Title", description = "Description")
-        var taskResult = TaskResult(result = 1L)
+        var taskResult = com.single.todocreate.presentation.util.TaskResult(result = 1L)
         `when`(taskUseCase.insertTask(task)).thenReturn(taskResult)
        var result = todoViewModel.insertTask(task)
         Assert.assertEquals(taskResult, result)
@@ -49,7 +50,10 @@ class TodoViewModelTest {
     @Test
     fun testInsertTaskError()= runBlockingTest{
         var task = Task(title = "Error", description = "Description")
-        var taskResult = TaskResult(isValid = false, title = com.single.core.presentation.FieldStatus.FieldEmpty)
+        var taskResult = com.single.todocreate.presentation.util.TaskResult(
+            isValid = false,
+            title = FieldStatus.FieldEmpty
+        )
         `when`(taskUseCase.insertTask(task)).thenReturn(taskResult)
         var result = todoViewModel.insertTask(task)
         Assert.assertEquals(com.single.core.presentation.FieldStatus.FieldEmpty, result.title)

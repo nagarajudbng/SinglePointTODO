@@ -1,7 +1,7 @@
 package com.single.point.feature_taskcreate.domine.usecases
 
 import com.single.core.data.database.Task
-import com.single.point.feature_taskcreate.presentation.util.TaskResult
+import com.single.todocreate.presentation.util.TaskResult
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations
 class TaskUseCaseTest{
 
     @InjectMocks
-    private lateinit var taskUseCase: TaskUseCase
+    private lateinit var taskUseCase: com.single.todocreate.domine.usecases.TaskUseCase
 
     @Mock
     private lateinit var repository: com.single.core.data.TaskRepositoryImpl
@@ -28,7 +28,7 @@ class TaskUseCaseTest{
     @Test
     fun insertTask() = runBlockingTest {
         var task = Task(title = "Title", description = "Description")
-        var taskResult = TaskResult(result = 1L)
+        var taskResult = com.single.todocreate.presentation.util.TaskResult(result = 1L)
         var id:Long = 1L
         `when`(repository.insertTask(task)).thenReturn(id)
         var result = taskUseCase.insertTask(task)

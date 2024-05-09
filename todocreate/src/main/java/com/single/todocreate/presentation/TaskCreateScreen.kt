@@ -1,4 +1,4 @@
-package com.single.point.feature_taskcreate.presentation
+package com.single.todocreate.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,10 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -45,12 +43,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.single.point.R
-import com.single.core.presentation.AppBar
-import com.single.core.presentation.FieldStatus
 import com.single.core.presentation.SharedViewModel
-import com.single.core.presentation.UiEvent
 import com.single.core.presentation.util.asString
+import com.single.todocreate.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 
@@ -61,7 +56,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Preview
 fun TaskCreateScreenPreview() {
     TaskCreateScreen(
-        hiltViewModel<com.single.core.presentation.SharedViewModel>(),
+        hiltViewModel<SharedViewModel>(),
         onNavigation = {},onSnackBarMessage={
 
     })
@@ -232,7 +227,7 @@ fun ProgressDialogBox(viewModel: TodoViewModel){
     }
 }
 @Composable
-fun DialogTime(viewModel:TodoViewModel){
+fun DialogTime(viewModel: TodoViewModel){
     var timeLeft by remember { mutableStateOf(3) }
 
     LaunchedEffect(key1 = timeLeft) {

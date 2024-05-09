@@ -1,11 +1,11 @@
-package com.single.point.feature_taskcreate.presentation
+package com.single.todocreate.presentation
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.single.core.data.database.Task
-import com.single.point.feature_taskcreate.domine.usecases.TaskUseCase
-import com.single.point.feature_taskcreate.presentation.util.TaskResult
+import com.single.todocreate.domine.usecases.TaskUseCase
+import com.single.todocreate.presentation.util.TaskResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -36,20 +36,20 @@ class TodoViewModel @Inject constructor(
     val searchQuery = _searchQuery
 
 
-    fun onEvent(event:TaskEvent){
+    fun onEvent(event: TaskEvent){
         when(event){
 
-            is TaskEvent.EnteredTitle->{
+            is TaskEvent.EnteredTitle ->{
                 _titleState.value = titleState.value.copy(
                     text = event.title
                 )
             }
-            is TaskEvent.EnteredDescription->{
+            is TaskEvent.EnteredDescription ->{
                 _descState.value = descState.value.copy(
                     text = event.description
                 )
             }
-            is TaskEvent.DialogueEvent->{
+            is TaskEvent.DialogueEvent ->{
                 _dialogState.value = event.isDismiss
                 viewModelScope.launch {
                     _eventFlow.emit(com.single.core.presentation.UiEvent.NavigateUp("Finished"))

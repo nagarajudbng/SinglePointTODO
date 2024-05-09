@@ -39,14 +39,17 @@ import com.single.core.presentation.AppBar
 import com.single.core.presentation.SharedViewModel
 import com.single.core.presentation.UiEvent
 import com.single.core.presentation.util.asString
-import com.single.point.feature_taskcreate.presentation.TaskCreateScreen
+import com.single.todocreate.presentation.TaskCreateScreen
 import kotlinx.coroutines.flow.collectLatest
 
 // Created by Nagaraju Deshetty on 07/05/24.
 @Composable
 @Preview
 fun HomeScreenPreview() {
-    TaskCreateScreen(hiltViewModel<com.single.core.presentation.SharedViewModel>(),onNavigation = {},onSnackBarMessage={})
+    TaskCreateScreen(
+        hiltViewModel<SharedViewModel>(),
+        onNavigation = {},
+        onSnackBarMessage = {})
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -1,8 +1,8 @@
-package com.single.point.feature_taskcreate.domine.usecases
+package com.single.todocreate.domine.usecases
 
 import com.single.core.data.database.Task
 import com.single.core.domine.repository.TaskRepository
-import com.single.point.feature_taskcreate.presentation.util.TaskResult
+import com.single.todocreate.presentation.util.TaskResult
 import javax.inject.Inject
 
 // Created by Nagaraju Deshetty on 07/05/24.
@@ -13,7 +13,7 @@ class TaskUseCase @Inject constructor(
 ) {
 
     suspend fun validate(task: Task): TaskResult {
-        var taskResult=TaskResult()
+        var taskResult= TaskResult()
 
         if (task.title?.contains("Error") == true) {
             throw IllegalArgumentException("Title cannot contain 'Error' text.")
@@ -29,7 +29,7 @@ class TaskUseCase @Inject constructor(
 
 
     }
-    suspend fun insertTask(task: Task): TaskResult{
+    suspend fun insertTask(task: Task): TaskResult {
         val result = repository.insertTask(task)
         return TaskResult(result = result)
     }
