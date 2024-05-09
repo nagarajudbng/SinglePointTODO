@@ -61,4 +61,10 @@ dependencies {
     implementation(libs.room.ktx)
     kapt(libs.room.compiler)
     implementation(libs.room.paging)
+
+
+    //Mockito
+    testImplementation(libs.mockito.inline)
+//coroutine test
+    testImplementation(libs.kotlinx.coroutines.test)
 }

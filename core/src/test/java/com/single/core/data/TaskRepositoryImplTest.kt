@@ -1,5 +1,4 @@
-package com.single.point.feature_taskcreate.data.local
-
+package com.single.core.data
 import com.single.core.data.database.AppDatabase
 import com.single.core.data.database.Task
 import com.single.core.data.database.TaskDao
@@ -60,7 +59,7 @@ class TaskRepositoryImplTest {
             Task(id = 1, title = "title 1", description = "Test Task"),
             Task(id = 2, title = "title 2", description = "Test Task"),
             Task(id = 3, title = "title 3", description = "Test Task")
-            )
+        )
         `when`(appDatabase.taskDao).thenReturn(taskDao)
         `when`(taskDao.getTaskList()).thenReturn(flowOf(taskList))
         val list = repository.getTaskList()

@@ -59,4 +59,11 @@ dependencies {
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
 
+
+
+    //Mockito
+    testImplementation(libs.mockito.inline)
+//coroutine test
+    testImplementation(libs.kotlinx.coroutines.test)
+
 }

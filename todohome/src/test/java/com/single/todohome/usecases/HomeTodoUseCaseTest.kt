@@ -1,4 +1,4 @@
-package com.single.point.usecases
+package com.single.todohome.usecases
 
 
 import com.single.core.data.database.Task

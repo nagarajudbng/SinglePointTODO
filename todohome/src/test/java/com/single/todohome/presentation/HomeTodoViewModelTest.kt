@@ -1,4 +1,4 @@
-package com.single.point.feature_todohome.presentation
+package com.single.todohome.presentation
 
 import com.single.core.data.database.Task
 import com.single.todohome.presentation.HomeTodoViewModel

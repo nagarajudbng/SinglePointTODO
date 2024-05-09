@@ -1,4 +1,4 @@
-package com.single.point.feature_taskcreate.presentation
+package com.single.todocreate.presentation
 
 import com.single.core.data.database.Task
 import com.single.core.presentation.FieldStatus
@@ -41,10 +41,10 @@ class TodoViewModelTest {
 
     @Test
     fun testInsertTaskSuccess()= runBlockingTest{
-       var task = Task(title = "Title", description = "Description")
+        var task = Task(title = "Title", description = "Description")
         var taskResult = com.single.todocreate.presentation.util.TaskResult(result = 1L)
         `when`(taskUseCase.insertTask(task)).thenReturn(taskResult)
-       var result = todoViewModel.insertTask(task)
+        var result = todoViewModel.insertTask(task)
         Assert.assertEquals(taskResult, result)
     }
     @Test

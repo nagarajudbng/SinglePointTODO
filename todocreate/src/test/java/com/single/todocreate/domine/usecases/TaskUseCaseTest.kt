@@ -1,4 +1,4 @@
-package com.single.point.feature_taskcreate.domine.usecases
+package com.single.todocreate.domine.usecases
 
 import com.single.core.data.database.Task
 import com.single.todocreate.presentation.util.TaskResult
