@@ -1,10 +1,8 @@
 package com.single.point.feature_taskcreate.data.local
 
-import com.single.point.core.data.database.AppDatabase
-import com.single.point.core.data.database.Task
-import com.single.point.core.data.database.TaskDao
-import com.single.point.feature_taskcreate.domine.repository.TaskRepository
-import com.single.point.feature_taskcreate.data.TaskRepositoryImpl
+import com.single.core.data.database.AppDatabase
+import com.single.core.data.database.Task
+import com.single.core.data.database.TaskDao
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
@@ -22,13 +20,13 @@ class TaskRepositoryImplTest {
 
 
     @Mock
-    private lateinit var appDatabase:AppDatabase
+    private lateinit var appDatabase: AppDatabase
 
     @Mock
     private lateinit var taskDao: TaskDao
 
     @InjectMocks
-    private lateinit var repository: TaskRepositoryImpl
+    private lateinit var repository: com.single.core.data.TaskRepositoryImpl
 
     @Before
     fun setup() {
@@ -36,7 +34,7 @@ class TaskRepositoryImplTest {
     }
     @Test
     fun testAddTask()=runBlockingTest{
-        var task = Task(title="Title",description="Description")
+        var task = Task(title = "Title", description = "Description")
         var id:Long = 1L
         `when` (appDatabase.taskDao).thenReturn(taskDao)
         `when`(taskDao.insertTask(task)).thenReturn(id)

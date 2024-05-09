@@ -1,20 +1,13 @@
 package com.single.point.feature_taskcreate.domine.usecases
 
-import com.single.point.core.data.database.Task
-import com.single.point.core.presentation.FieldStatus
-import com.single.point.feature_taskcreate.data.TaskRepositoryImpl
+import com.single.core.data.database.Task
 import com.single.point.feature_taskcreate.presentation.util.TaskResult
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
@@ -25,7 +18,7 @@ class TaskUseCaseTest{
     private lateinit var taskUseCase: TaskUseCase
 
     @Mock
-    private lateinit var repository: TaskRepositoryImpl
+    private lateinit var repository: com.single.core.data.TaskRepositoryImpl
 
     @Before
     fun startUP(){
@@ -34,7 +27,7 @@ class TaskUseCaseTest{
 
     @Test
     fun insertTask() = runBlockingTest {
-        var task = Task(title="Title",description="Description")
+        var task = Task(title = "Title", description = "Description")
         var taskResult = TaskResult(result = 1L)
         var id:Long = 1L
         `when`(repository.insertTask(task)).thenReturn(id)
@@ -44,16 +37,16 @@ class TaskUseCaseTest{
 
     @Test
     fun taskValidateWithError()= runBlockingTest{
-        var task = Task(title="",description="Description")
+        var task = Task(title = "", description = "Description")
         var result = taskUseCase.validate(task)
-        assertEquals(FieldStatus.FieldEmpty,result.title)
+        assertEquals(com.single.core.presentation.FieldStatus.FieldEmpty,result.title)
         assertEquals(false, result.isValid)
     }
     @Test
     fun taskValidateWithSuccess()= runBlockingTest {
         var task = Task(title = "Hello", description = "Description")
         var result = taskUseCase.validate(task)
-        assertEquals(FieldStatus.FieldFilled, result.title)
+        assertEquals(com.single.core.presentation.FieldStatus.FieldFilled, result.title)
         assertEquals(true, result.isValid)
     }
 

@@ -3,34 +3,30 @@ package com.single.point.feature_taskcreate.presentation
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.single.point.core.data.database.Task
-import com.single.point.core.domine.states.StandardTextFieldState
-import com.single.point.core.presentation.UiEvent
-import com.single.point.core.presentation.util.UiText
+import com.single.core.data.database.Task
 import com.single.point.feature_taskcreate.domine.usecases.TaskUseCase
 import com.single.point.feature_taskcreate.presentation.util.TaskResult
-import com.single.point.feature_todohome.presentation.SearchEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import java.lang.IllegalArgumentException
 import javax.inject.Inject
+
+// Created by Nagaraju Deshetty on 07/05/
+
 
 @HiltViewModel
 class TodoViewModel @Inject constructor(
     private var taskUseCase: TaskUseCase
 ):ViewModel(){
 
-    private val _titleState = mutableStateOf(StandardTextFieldState())
+    private val _titleState = mutableStateOf(com.single.core.states.StandardTextFieldState())
     val titleState = _titleState
 
-    private val _descState = mutableStateOf(StandardTextFieldState())
+    private val _descState = mutableStateOf(com.single.core.states.StandardTextFieldState())
     val descState = _descState
 
-    private val _eventFlow = MutableSharedFlow<UiEvent>()
+    private val _eventFlow = MutableSharedFlow<com.single.core.presentation.UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
     private val _dialogState = mutableStateOf(false)
@@ -56,20 +52,22 @@ class TodoViewModel @Inject constructor(
             is TaskEvent.DialogueEvent->{
                 _dialogState.value = event.isDismiss
                 viewModelScope.launch {
-                    _eventFlow.emit(UiEvent.NavigateUp("Finished"))
+                    _eventFlow.emit(com.single.core.presentation.UiEvent.NavigateUp("Finished"))
                 }
 
             }
             is TaskEvent.AddTask ->{
                 viewModelScope.launch {
 
-                    var task = Task(title = _titleState.value.text, description = _descState
-                        .value.text)
+                    var task = Task(
+                        title = _titleState.value.text, description = _descState
+                            .value.text
+                    )
                     var taskResult = TaskResult()
                     try{
                          taskResult = taskUseCase.validate(task)
                     } catch (e:IllegalArgumentException){
-                        _eventFlow.emit(UiEvent.NavigateUp("Exception"))
+                        _eventFlow.emit(com.single.core.presentation.UiEvent.NavigateUp("Exception"))
 //                        _eventFlow.emit(UiEvent.ShowSnackBar(UiText.DynamicString("Failed to add TODO")))
                     }
 

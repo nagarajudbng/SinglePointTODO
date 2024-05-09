@@ -34,11 +34,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.single.point.R
-import com.single.point.core.data.database.Task
-import com.single.point.core.presentation.AppBar
-import com.single.point.core.presentation.SharedViewModel
-import com.single.point.core.presentation.UiEvent
-import com.single.point.core.presentation.util.asString
+import com.single.core.data.database.Task
+import com.single.core.presentation.AppBar
+import com.single.core.presentation.SharedViewModel
+import com.single.core.presentation.UiEvent
+import com.single.core.presentation.util.asString
 import com.single.point.feature_taskcreate.presentation.TaskCreateScreen
 import kotlinx.coroutines.flow.collectLatest
 
@@ -46,12 +46,12 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 @Preview
 fun HomeScreenPreview() {
-    TaskCreateScreen(hiltViewModel<SharedViewModel>(),onNavigation = {},onSnackBarMessage={})
+    TaskCreateScreen(hiltViewModel<com.single.core.presentation.SharedViewModel>(),onNavigation = {},onSnackBarMessage={})
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    sharedViewModel:SharedViewModel,
+    sharedViewModel: com.single.core.presentation.SharedViewModel,
     onNavigation: (String) -> Unit,
     onSnackBarMessage:(String)->Unit
 ) {
@@ -61,7 +61,7 @@ fun HomeScreen(
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
-                is UiEvent.ShowSnackBar -> {
+                is com.single.core.presentation.UiEvent.ShowSnackBar -> {
                     onSnackBarMessage(event.uiText.asString(context))
                 }
                 else -> {}
@@ -102,7 +102,7 @@ fun HomeScreen(
 fun TopBarView(viewModel: HomeTodoViewModel){
     var showSearch = viewModel.topBarState.value
     if(!showSearch) {
-        AppBar(
+        com.single.core.presentation.AppBar(
             title = stringResource(id = R.string.app_bar_title),
             searchClick = {
                 viewModel.onSearchEvent(SearchEvent.TopSearchSelected(true))
@@ -197,7 +197,7 @@ fun ListItem(task: Task){
 }
 
 @Composable
-fun AlertDialog(viewModel: SharedViewModel) {
+fun AlertDialog(viewModel: com.single.core.presentation.SharedViewModel) {
     var shouldShowDialog = remember { mutableStateOf(false) }
     LaunchedEffect(viewModel.messageState.value){
         if(viewModel.messageState.value == "Exception") {

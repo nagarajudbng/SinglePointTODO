@@ -1,11 +1,13 @@
 package com.single.point.feature_taskcreate.presentation.util
 
-import com.single.point.core.presentation.FieldStatus
-import com.single.point.feature_taskcreate.domine.repository.RowId
+import com.single.core.domine.repository.RowId
+
+// Created by Nagaraju Deshetty on 07/05/
+
 
 data class TaskResult(
     var isValid:Boolean = false,
-    var title: FieldStatus?= null,
-    var description: FieldStatus? = null,
+    var title: com.single.core.presentation.FieldStatus?= null,
+    var description: com.single.core.presentation.FieldStatus? = null,
     val result: RowId?=null
 )

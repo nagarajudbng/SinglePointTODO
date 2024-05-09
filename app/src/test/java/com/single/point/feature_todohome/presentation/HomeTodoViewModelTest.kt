@@ -1,6 +1,6 @@
 package com.single.point.feature_todohome.presentation
 
-import com.single.point.core.data.database.Task
+import com.single.core.data.database.Task
 import com.single.point.feature_todohome.domine.usecases.HomeTodoUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOf

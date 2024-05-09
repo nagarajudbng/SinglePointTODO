@@ -1,15 +1,13 @@
 package com.single.point.feature_todohome.domine.usecases
 
-import com.single.point.core.data.database.Task
-import com.single.point.core.presentation.FieldStatus
-import com.single.point.feature_taskcreate.domine.repository.TaskRepository
-import com.single.point.feature_taskcreate.presentation.util.TaskResult
+import com.single.core.data.database.Task
+import com.single.core.domine.repository.TaskRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 // Created by Nagaraju Deshetty on 07/05/24.
 class HomeTodoUseCase @Inject constructor(
-    private val repository: TaskRepository
+    private val repository: com.single.core.domine.repository.TaskRepository
 ) {
 
     suspend fun getTaskList(): Flow<List<Task>>{

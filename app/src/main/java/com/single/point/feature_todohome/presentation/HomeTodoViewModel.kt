@@ -3,8 +3,8 @@ package com.single.point.feature_todohome.presentation
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.single.point.core.data.database.Task
-import com.single.point.core.presentation.UiEvent
+import com.single.core.data.database.Task
+import com.single.core.presentation.UiEvent
 import com.single.point.feature_todohome.domine.usecases.HomeTodoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +19,7 @@ class HomeTodoViewModel @Inject constructor(
     private var homeTodoUseCase: HomeTodoUseCase
 ):ViewModel(){
 
-    private val _eventFlow = MutableSharedFlow<UiEvent>()
+    private val _eventFlow = MutableSharedFlow<com.single.core.presentation.UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
    private val _todoList = mutableStateOf<List<Task>>(emptyList())

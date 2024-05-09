@@ -13,7 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.single.point.core.presentation.SharedViewModel
+import com.single.core.presentation.SharedViewModel
 import com.single.point.feature_todohome.presentation.HomeScreen
 import com.single.point.feature_taskcreate.presentation.TaskCreateScreen
 import kotlinx.coroutines.launch
@@ -28,7 +28,7 @@ fun AppNavHost(
     ) {
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-    val sharedViewModel = hiltViewModel<SharedViewModel>()
+    val sharedViewModel = hiltViewModel<com.single.core.presentation.SharedViewModel>()
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackBarHostState)

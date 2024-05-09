@@ -1,8 +1,8 @@
 package com.single.point.usecases
 
 
-import com.single.point.core.data.database.Task
-import com.single.point.feature_taskcreate.data.TaskRepositoryImpl
+import com.single.core.data.database.Task
+import com.single.core.data.TaskRepositoryImpl
 import com.single.point.feature_todohome.domine.usecases.HomeTodoUseCase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -21,7 +21,7 @@ class HomeTodoUseCaseTest {
     private lateinit var homeTodoUseCase: HomeTodoUseCase
 
     @Mock
-    private lateinit var repository: TaskRepositoryImpl
+    private lateinit var repository: com.single.core.data.TaskRepositoryImpl
 
     @Before
     fun startUP(){
