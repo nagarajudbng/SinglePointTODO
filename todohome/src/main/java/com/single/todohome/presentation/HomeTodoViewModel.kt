@@ -1,11 +1,11 @@
-package com.single.point.feature_todohome.presentation
+package com.single.todohome.presentation
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.single.core.data.database.Task
 import com.single.core.presentation.UiEvent
-import com.single.point.feature_todohome.domine.usecases.HomeTodoUseCase
+import com.single.todohome.usecases.HomeTodoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -39,16 +39,16 @@ class HomeTodoViewModel @Inject constructor(
         getTaskList()
     }
 
-    fun onSearchEvent(event:SearchEvent){
+    fun onSearchEvent(event: SearchEvent){
 
         when(event){
-            is SearchEvent.TopSearchSelected->{
+            is SearchEvent.TopSearchSelected ->{
                 _topBarState.value = event.selected
             }
-            is SearchEvent.OnSearchQuery->{
+            is SearchEvent.OnSearchQuery ->{
                 searchQuery.value = event.query
             }
-            is SearchEvent.OnSearchStart->{
+            is SearchEvent.OnSearchStart ->{
                 viewModelScope.launch {
                     homeTodoUseCase.searchQuery(event.query).flowOn(Dispatchers.IO).collect{
                         todoList.value = it

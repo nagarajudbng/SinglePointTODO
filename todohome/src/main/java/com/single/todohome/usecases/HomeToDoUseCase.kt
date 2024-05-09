@@ -1,4 +1,4 @@
-package com.single.point.feature_todohome.domine.usecases
+package com.single.todohome.usecases
 
 import com.single.core.data.database.Task
 import com.single.core.domine.repository.TaskRepository

@@ -3,7 +3,7 @@ package com.single.point.usecases
 
 import com.single.core.data.database.Task
 import com.single.core.data.TaskRepositoryImpl
-import com.single.point.feature_todohome.domine.usecases.HomeTodoUseCase
+import com.single.todohome.usecases.HomeTodoUseCase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking

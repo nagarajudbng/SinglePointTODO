@@ -17,3 +17,4 @@ rootProject.name = "MainActivity"
 include(":app")
 include(":core")
 include(":todocreate")
+include(":todohome")

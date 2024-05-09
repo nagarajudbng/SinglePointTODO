@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.material3)
     implementation(project(":core"))
     implementation(project(":todocreate"))
+    implementation(project(":todohome"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

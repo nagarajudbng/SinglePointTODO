@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.single.todocreate"
+    namespace = "com.single.todohome"
     compileSdk = 34
 
     defaultConfig {
@@ -58,5 +58,4 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
-
 }

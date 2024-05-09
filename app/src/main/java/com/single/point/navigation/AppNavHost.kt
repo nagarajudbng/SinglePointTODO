@@ -14,7 +14,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.single.core.presentation.SharedViewModel
-import com.single.point.feature_todohome.presentation.HomeScreen
+import com.single.todohome.presentation.HomeScreen
 import com.single.todocreate.presentation.TaskCreateScreen
 import kotlinx.coroutines.launch
 

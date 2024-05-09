@@ -1,4 +1,4 @@
-package com.single.point.feature_todohome.presentation
+package com.single.todohome.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,20 +33,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.single.point.R
 import com.single.core.data.database.Task
 import com.single.core.presentation.AppBar
 import com.single.core.presentation.SharedViewModel
 import com.single.core.presentation.UiEvent
 import com.single.core.presentation.util.asString
-import com.single.todocreate.presentation.TaskCreateScreen
+import com.single.todohome.R
 import kotlinx.coroutines.flow.collectLatest
 
 // Created by Nagaraju Deshetty on 07/05/24.
 @Composable
 @Preview
 fun HomeScreenPreview() {
-    TaskCreateScreen(
+    HomeScreen(
         hiltViewModel<SharedViewModel>(),
         onNavigation = {},
         onSnackBarMessage = {})
