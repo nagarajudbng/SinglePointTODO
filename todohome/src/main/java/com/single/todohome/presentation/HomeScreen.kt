@@ -33,7 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.single.core.data.database.Task
+import com.single.core.data.database.Todo
 import com.single.core.presentation.SharedViewModel
 import com.single.core.presentation.util.asString
 import com.single.todohome.R
@@ -165,10 +165,10 @@ fun showTodoList(viewModel: HomeTodoViewModel){
 @Preview
 @Composable
 fun ListItemPreview(){
-    ListItem(Task(title = "Hello", description = "Description"))
+    ListItem(Todo(title = "Hello", description = "Description"))
 }
 @Composable
-fun ListItem(task: Task){
+fun ListItem(task: Todo){
 
     Card(
         modifier = Modifier

@@ -1,6 +1,6 @@
 package com.single.todohome.presentation
 
-import com.single.core.data.database.Task
+import com.single.core.data.database.Todo
 import com.single.todohome.usecases.HomeTodoUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOf
@@ -32,9 +32,9 @@ class HomeTodoViewModelTest{
     @Test
     fun testGetTaskList()= runBlockingTest {
         var taskList = listOf(
-            Task(id = 1, title = "title 1", description = "Test Task"),
-            Task(id = 2, title = "title 2", description = "Test Task"),
-            Task(id = 3, title = "title 3", description = "Test Task")
+            Todo(id = 1, title = "title 1", description = "Test Task"),
+            Todo(id = 2, title = "title 2", description = "Test Task"),
+            Todo(id = 3, title = "title 3", description = "Test Task")
         )
         Mockito.`when` (homeTodoUseCase.getTaskList()).thenReturn(flowOf(taskList))
         var list = homeTodoViewModel.getTaskList()
