@@ -7,5 +7,5 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [Todo::class], version = 1, exportSchema = false)
 abstract class AppDatabase:RoomDatabase(){
-    abstract val taskDao: TaskDao
+    abstract val taskDao: TodoDao
 }

@@ -1,7 +1,7 @@
 package com.single.core.data
 import com.single.core.data.database.AppDatabase
 import com.single.core.data.database.Todo
-import com.single.core.data.database.TaskDao
+import com.single.core.data.database.TodoDao
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
@@ -22,7 +22,7 @@ class TodoRepositoryImplTest {
     private lateinit var appDatabase: AppDatabase
 
     @Mock
-    private lateinit var taskDao: TaskDao
+    private lateinit var taskDao: TodoDao
 
     @InjectMocks
     private lateinit var repository: com.single.core.data.TaskRepositoryImpl
