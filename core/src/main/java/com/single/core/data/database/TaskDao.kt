@@ -9,12 +9,12 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TaskDao {
     @Insert
-    suspend fun insertTask(task: Task):Long
+    suspend fun insertTask(task: Todo):Long
     @Query("SELECT * FROM Task")
-    fun getTaskList(): Flow<List<Task>>
+    fun getTaskList(): Flow<List<Todo>>
 
     @Query("SELECT * FROM Task WHERE title LIKE '%' || :searchQuery || '%'")
-    fun search(searchQuery:String): Flow<List<Task>>
+    fun search(searchQuery:String): Flow<List<Todo>>
 
 
 }

@@ -1,9 +1,7 @@
 package com.single.todohome.usecases
 
 
-import com.single.core.data.database.Task
-import com.single.core.data.TaskRepositoryImpl
-import com.single.todohome.usecases.HomeTodoUseCase
+import com.single.core.data.database.Todo
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
@@ -30,9 +28,9 @@ class HomeTodoUseCaseTest {
     @Test
     fun taskGetList()= runBlocking{
         var taskList = listOf(
-            Task(id = 1, title = "title 1", description = "Test Task"),
-            Task(id = 2, title = "title 2", description = "Test Task"),
-            Task(id = 3, title = "title 3", description = "Test Task")
+            Todo(id = 1, title = "title 1", description = "Test Task"),
+            Todo(id = 2, title = "title 2", description = "Test Task"),
+            Todo(id = 3, title = "title 3", description = "Test Task")
         )
 
         Mockito.`when`(repository.getTaskList()).thenReturn(flowOf(taskList))

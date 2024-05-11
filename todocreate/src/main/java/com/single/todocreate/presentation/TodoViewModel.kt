@@ -3,7 +3,7 @@ package com.single.todocreate.presentation
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.single.core.data.database.Task
+import com.single.core.data.database.Todo
 import com.single.todocreate.domine.usecases.TaskUseCase
 import com.single.todocreate.presentation.util.TaskResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -59,7 +59,7 @@ class TodoViewModel @Inject constructor(
             is TaskEvent.AddTask ->{
                 viewModelScope.launch {
 
-                    var task = Task(
+                    var task = Todo(
                         title = _titleState.value.text, description = _descState
                             .value.text
                     )
@@ -94,7 +94,7 @@ class TodoViewModel @Inject constructor(
 
     }
 
-    suspend fun insertTask(task: Task): TaskResult {
+    suspend fun insertTask(task: Todo): TaskResult {
      return  taskUseCase.insertTask(task)
     }
 

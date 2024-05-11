@@ -3,7 +3,7 @@ package com.single.todohome.presentation
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.single.core.data.database.Task
+import com.single.core.data.database.Todo
 import com.single.todohome.usecases.HomeTodoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +21,7 @@ class HomeTodoViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<com.single.core.presentation.UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-   private val _todoList = mutableStateOf<List<Task>>(emptyList())
+   private val _todoList = mutableStateOf<List<Todo>>(emptyList())
     val todoList = _todoList
 
     private val _searchQuery = mutableStateOf("")

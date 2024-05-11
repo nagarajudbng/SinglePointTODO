@@ -1,6 +1,6 @@
 package com.single.core.domine.repository
 
-import com.single.core.data.database.Task
+import com.single.core.data.database.Todo
 import kotlinx.coroutines.flow.Flow
 
 
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 typealias  RowId = Long
 interface TaskRepository {
-    suspend fun insertTask(task: Task): RowId
-    suspend fun getTaskList(): Flow<List<Task>>
-    suspend fun searchQuery(query: String): Flow<List<Task>>
+    suspend fun insertTask(task: Todo): RowId
+    suspend fun getTaskList(): Flow<List<Todo>>
+    suspend fun searchQuery(query: String): Flow<List<Todo>>
 }

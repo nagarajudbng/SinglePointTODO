@@ -1,6 +1,6 @@
 package com.single.core.data
 import com.single.core.data.database.AppDatabase
-import com.single.core.data.database.Task
+import com.single.core.data.database.Todo
 import com.single.core.data.database.TaskDao
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -15,7 +15,7 @@ import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
-class TaskRepositoryImplTest {
+class TodoRepositoryImplTest {
 
 
     @Mock
@@ -33,7 +33,7 @@ class TaskRepositoryImplTest {
     }
     @Test
     fun testAddTask()=runBlockingTest{
-        var task = Task(title = "Title", description = "Description")
+        var task = Todo(title = "Title", description = "Description")
         var id:Long = 1L
         `when` (appDatabase.taskDao).thenReturn(taskDao)
         `when`(taskDao.insertTask(task)).thenReturn(id)
@@ -42,7 +42,7 @@ class TaskRepositoryImplTest {
     }
     @Test(expected = Exception::class)
     fun testAddTaskThrowException() = runBlocking {
-        val task = Task(id = 1, title = "Error", description = "Test Task")
+        val task = Todo(id = 1, title = "Error", description = "Test Task")
         val exceptionMessage = "Error inserting task"
         val  exception = Exception(exceptionMessage)
         `when`(appDatabase.taskDao).thenReturn(taskDao)
@@ -56,9 +56,9 @@ class TaskRepositoryImplTest {
     @Test
     fun testGetTaskList() = runBlocking {
         var taskList = listOf(
-            Task(id = 1, title = "title 1", description = "Test Task"),
-            Task(id = 2, title = "title 2", description = "Test Task"),
-            Task(id = 3, title = "title 3", description = "Test Task")
+            Todo(id = 1, title = "title 1", description = "Test Task"),
+            Todo(id = 2, title = "title 2", description = "Test Task"),
+            Todo(id = 3, title = "title 3", description = "Test Task")
         )
         `when`(appDatabase.taskDao).thenReturn(taskDao)
         `when`(taskDao.getTaskList()).thenReturn(flowOf(taskList))

@@ -1,13 +1,8 @@
 package com.single.todocreate.presentation
 
-import com.single.core.data.database.Task
+import com.single.core.data.database.Todo
 import com.single.core.presentation.FieldStatus
-import com.single.todocreate.domine.usecases.TaskUseCase
-import com.single.todocreate.presentation.util.TaskResult
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
@@ -18,10 +13,8 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
-import java.lang.reflect.Field
 
 // Created by Nagaraju Deshetty on 07/05/24.
 
@@ -41,7 +34,7 @@ class TodoViewModelTest {
 
     @Test
     fun testInsertTaskSuccess()= runBlockingTest{
-        var task = Task(title = "Title", description = "Description")
+        var task = Todo(title = "Title", description = "Description")
         var taskResult = com.single.todocreate.presentation.util.TaskResult(result = 1L)
         `when`(taskUseCase.insertTask(task)).thenReturn(taskResult)
         var result = todoViewModel.insertTask(task)
@@ -49,7 +42,7 @@ class TodoViewModelTest {
     }
     @Test
     fun testInsertTaskError()= runBlockingTest{
-        var task = Task(title = "Error", description = "Description")
+        var task = Todo(title = "Error", description = "Description")
         var taskResult = com.single.todocreate.presentation.util.TaskResult(
             isValid = false,
             title = FieldStatus.FieldEmpty

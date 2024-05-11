@@ -1,7 +1,6 @@
 package com.single.todocreate.domine.usecases
 
-import com.single.core.data.database.Task
-import com.single.todocreate.presentation.util.TaskResult
+import com.single.core.data.database.Todo
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -12,7 +11,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
 // Created by Nagaraju Deshetty on 07/05/24.
-class TaskUseCaseTest{
+class TodoUseCaseTest{
 
     @InjectMocks
     private lateinit var taskUseCase: com.single.todocreate.domine.usecases.TaskUseCase
@@ -27,7 +26,7 @@ class TaskUseCaseTest{
 
     @Test
     fun insertTask() = runBlockingTest {
-        var task = Task(title = "Title", description = "Description")
+        var task = Todo(title = "Title", description = "Description")
         var taskResult = com.single.todocreate.presentation.util.TaskResult(result = 1L)
         var id:Long = 1L
         `when`(repository.insertTask(task)).thenReturn(id)
@@ -37,14 +36,14 @@ class TaskUseCaseTest{
 
     @Test
     fun taskValidateWithError()= runBlockingTest{
-        var task = Task(title = "", description = "Description")
+        var task = Todo(title = "", description = "Description")
         var result = taskUseCase.validate(task)
         assertEquals(com.single.core.presentation.FieldStatus.FieldEmpty,result.title)
         assertEquals(false, result.isValid)
     }
     @Test
     fun taskValidateWithSuccess()= runBlockingTest {
-        var task = Task(title = "Hello", description = "Description")
+        var task = Todo(title = "Hello", description = "Description")
         var result = taskUseCase.validate(task)
         assertEquals(com.single.core.presentation.FieldStatus.FieldFilled, result.title)
         assertEquals(true, result.isValid)

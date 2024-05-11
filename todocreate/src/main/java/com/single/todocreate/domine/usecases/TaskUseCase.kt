@@ -1,6 +1,6 @@
 package com.single.todocreate.domine.usecases
 
-import com.single.core.data.database.Task
+import com.single.core.data.database.Todo
 import com.single.core.domine.repository.TaskRepository
 import com.single.todocreate.presentation.util.TaskResult
 import javax.inject.Inject
@@ -12,7 +12,7 @@ class TaskUseCase @Inject constructor(
     private val repository: TaskRepository
 ) {
 
-    suspend fun validate(task: Task): TaskResult {
+    suspend fun validate(task: Todo): TaskResult {
         var taskResult= TaskResult()
 
         if (task.title?.contains("Error") == true) {
@@ -29,7 +29,7 @@ class TaskUseCase @Inject constructor(
 
 
     }
-    suspend fun insertTask(task: Task): TaskResult {
+    suspend fun insertTask(task: Todo): TaskResult {
         val result = repository.insertTask(task)
         return TaskResult(result = result)
     }
