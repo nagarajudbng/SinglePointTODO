@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.single.core.presentation.FieldStatus
 import com.single.core.presentation.SharedViewModel
 import com.single.core.presentation.util.asString
 import com.single.todocreate.R
@@ -137,10 +138,17 @@ fun TaskCreateScreen(
                         )
                 },
                 supportingText = {
-                    if (viewModel.titleState.value.error == com.single.core.presentation.FieldStatus.FieldEmpty) {
+
+                    if (viewModel.titleState.value.error != FieldStatus.FieldFilled)
+                    {
+                        val errorMessage:String = when(viewModel.titleState.value.error){
+                            is FieldStatus.FieldEmpty-> "Title Required"
+                            is FieldStatus.InputTooShort-> "Title Minimum 10 Characters length"
+                            else -> {""}
+                        }
                         Text(
                             modifier = Modifier.fillMaxWidth(),
-                            text = "Title Required",
+                            text = errorMessage,
                             color = MaterialTheme.colorScheme.error
                         )
                     }
@@ -172,13 +180,20 @@ fun TaskCreateScreen(
                         )
                 },
                 supportingText = {
-                    if (viewModel.descState.value.error  == com.single.core.presentation.FieldStatus.FieldEmpty) {
+                    if (viewModel.descState.value.error != FieldStatus.FieldFilled)
+                    {
+                        val errorMessage:String = when(viewModel.descState.value.error){
+                            is FieldStatus.FieldEmpty-> "Description Required"
+                            is FieldStatus.InputTooShort-> "Description Too Short"
+                            else -> {""}
+                        }
                         Text(
                             modifier = Modifier.fillMaxWidth(),
-                            text = "Description Required",
+                            text = errorMessage,
                             color = MaterialTheme.colorScheme.error
                         )
                     }
+
                 },
             )
             Row(

@@ -4,8 +4,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.single.core.data.database.Todo
+import com.single.core.presentation.FieldStatus
+import com.single.core.presentation.StandardTextFieldState
+import com.single.core.presentation.UiEvent
+import com.single.todocreate.domine.usecases.DescriptionUseCase
 import com.single.todocreate.domine.usecases.TaskUseCase
-import com.single.todocreate.presentation.util.TaskResult
+import com.single.todocreate.domine.usecases.TitleUseCase
+import com.single.todocreate.domine.util.InputStatus
+import com.single.todocreate.domine.util.TaskResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -17,13 +23,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TodoViewModel @Inject constructor(
+    private var titleUseCase: TitleUseCase,
+    private var descriptionUseCase: DescriptionUseCase,
     private var taskUseCase: TaskUseCase
 ):ViewModel(){
 
-    private val _titleState = mutableStateOf(com.single.core.states.StandardTextFieldState())
+    private val _titleState = mutableStateOf(StandardTextFieldState())
     val titleState = _titleState
 
-    private val _descState = mutableStateOf(com.single.core.states.StandardTextFieldState())
+    private val _descState = mutableStateOf(StandardTextFieldState())
     val descState = _descState
 
     private val _eventFlow = MutableSharedFlow<com.single.core.presentation.UiEvent>()
@@ -59,31 +67,42 @@ class TodoViewModel @Inject constructor(
             is TaskEvent.AddTask ->{
                 viewModelScope.launch {
 
-                    var task = Todo(
-                        title = _titleState.value.text, description = _descState
-                            .value.text
-                    )
-                    var taskResult = TaskResult()
-                    try{
-                         taskResult = taskUseCase.validate(task)
-                    } catch (e:IllegalArgumentException){
-                        _eventFlow.emit(com.single.core.presentation.UiEvent.NavigateUp("Exception"))
-//                        _eventFlow.emit(UiEvent.ShowSnackBar(UiText.DynamicString("Failed to add TODO")))
-                    }
 
-                    if(!taskResult.isValid) {
-                        _descState.value = descState.value.copy(
-                            error = taskResult.description
+                    var titleResult = TaskResult()
+                    try{
+                        titleResult = titleUseCase(title = _titleState.value.text)
+                    } catch (e:IllegalArgumentException){
+                        _eventFlow.emit(UiEvent.NavigateUp("Exception"))
+                    }
+                    var titleStatus:FieldStatus = when (titleResult.title) {
+                        InputStatus.EMPTY -> FieldStatus.FieldEmpty
+                        InputStatus.LENGTH_TOO_SHORT -> FieldStatus.InputTooShort
+                        InputStatus.VALID -> FieldStatus.FieldFilled
+                        null -> TODO()
+                    }
+                    _titleState.value = titleState.value.copy(
+                        error = titleStatus
+                    )
+                    var descriptionResult = descriptionUseCase(description = _descState.value.text)
+                    var descriptionStatus:FieldStatus = when (descriptionResult.description) {
+                        InputStatus.EMPTY -> FieldStatus.FieldEmpty
+                        InputStatus.LENGTH_TOO_SHORT -> FieldStatus.InputTooShort
+                        InputStatus.VALID -> FieldStatus.FieldFilled
+                        null -> TODO()
+                    }
+                    _descState.value = descState.value.copy(
+                        error = descriptionStatus
+                    )
+                    if(titleResult.title ==InputStatus.VALID && descriptionResult.description == InputStatus.VALID)
+                    {
+                        val task = Todo(
+                            title = _titleState.value.text, description = _descState
+                                .value.text
                         )
-                        _titleState.value = titleState.value.copy(
-                            error = taskResult.title
-                        )
-                    } else {
-                        dialogState.value=true
-                        taskResult = taskUseCase.insertTask(task = task)
+                        val taskResult = taskUseCase.insertTask(task = task)
                         taskResult.result?.let {
                             if(it>0){
-//                                _dialogState.value = true
+                                _dialogState.value = true
                             }
                         }
                     }

@@ -4,7 +4,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.single.core.data.database.Todo
-import com.single.todohome.usecases.HomeTodoUseCase
+import com.single.todohome.domain.usecases.ToDoSearchUseCase
+import com.single.todohome.domain.usecases.TodoGetListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeTodoViewModel @Inject constructor(
-    private var homeTodoUseCase: HomeTodoUseCase
+    private val todoGetListUseCase: TodoGetListUseCase,
+    private val toDoSearchUseCase: ToDoSearchUseCase
 ):ViewModel(){
 
     private val _eventFlow = MutableSharedFlow<com.single.core.presentation.UiEvent>()
@@ -49,7 +51,7 @@ class HomeTodoViewModel @Inject constructor(
             }
             is SearchEvent.OnSearchStart ->{
                 viewModelScope.launch {
-                    homeTodoUseCase.searchQuery(event.query).flowOn(Dispatchers.IO).collect{
+                    toDoSearchUseCase(event.query).flowOn(Dispatchers.IO).collect{
                         todoList.value = it
                     }
                 }
@@ -68,7 +70,7 @@ class HomeTodoViewModel @Inject constructor(
     }
      fun getTaskList() {
          viewModelScope.launch {
-              homeTodoUseCase.getTaskList().flowOn(Dispatchers.IO).collect{
+              todoGetListUseCase().flowOn(Dispatchers.IO).collect{
                   todoList.value = it.reversed()
               }
          }

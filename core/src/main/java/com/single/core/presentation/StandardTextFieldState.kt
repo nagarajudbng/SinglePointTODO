@@ -1,4 +1,4 @@
-package com.single.core.states
+package com.single.core.presentation
 
 import com.single.core.presentation.util.Error
 

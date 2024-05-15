@@ -2,6 +2,7 @@ package com.single.todohome.usecases
 
 
 import com.single.core.data.database.Todo
+import com.single.todohome.domain.usecases.ToDoSearchUseCase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
@@ -14,9 +15,9 @@ import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
 // Created by Nagaraju Deshetty on 08/05/24.
-class HomeTodoUseCaseTest {
+class ToDoSearchUseCaseTest {
     @InjectMocks
-    private lateinit var homeTodoUseCase: HomeTodoUseCase
+    private lateinit var todoSearchUseCase: ToDoSearchUseCase
 
     @Mock
     private lateinit var repository: com.single.core.data.TaskRepositoryImpl
@@ -26,16 +27,16 @@ class HomeTodoUseCaseTest {
         MockitoAnnotations.initMocks(this)
     }
     @Test
-    fun taskGetList()= runBlocking{
+    fun taskSearchList()= runBlocking{
         var taskList = listOf(
             Todo(id = 1, title = "title 1", description = "Test Task"),
             Todo(id = 2, title = "title 2", description = "Test Task"),
             Todo(id = 3, title = "title 3", description = "Test Task")
         )
 
-        Mockito.`when`(repository.getTaskList()).thenReturn(flowOf(taskList))
-        var list = homeTodoUseCase.getTaskList()
-        Mockito.verify(repository).getTaskList()
+        Mockito.`when`(repository.searchQuery("test")).thenReturn(flowOf(taskList))
+        var list = todoSearchUseCase("test")
+        Mockito.verify(repository).searchQuery("test")
         Assert.assertEquals(taskList, list.first())
     }
 

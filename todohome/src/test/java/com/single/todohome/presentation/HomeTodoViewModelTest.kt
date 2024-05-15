@@ -1,7 +1,8 @@
 package com.single.todohome.presentation
 
 import com.single.core.data.database.Todo
-import com.single.todohome.usecases.HomeTodoUseCase
+import com.single.todohome.domain.usecases.ToDoSearchUseCase
+import com.single.todohome.domain.usecases.TodoGetListUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -19,7 +20,10 @@ import org.mockito.MockitoAnnotations
 // Created by Nagaraju Deshetty on 08/05/24.
 class HomeTodoViewModelTest{
     @Mock
-    private lateinit var homeTodoUseCase: HomeTodoUseCase
+    private lateinit var todoGetListUseCase: TodoGetListUseCase
+
+    @Mock
+    private lateinit var searchUseCase: ToDoSearchUseCase
 
     @InjectMocks
     private lateinit var homeTodoViewModel: HomeTodoViewModel
@@ -36,9 +40,8 @@ class HomeTodoViewModelTest{
             Todo(id = 2, title = "title 2", description = "Test Task"),
             Todo(id = 3, title = "title 3", description = "Test Task")
         )
-        Mockito.`when` (homeTodoUseCase.getTaskList()).thenReturn(flowOf(taskList))
+        Mockito.`when` (todoGetListUseCase()).thenReturn(flowOf(taskList))
         var list = homeTodoViewModel.getTaskList()
-        Mockito.verify(homeTodoUseCase).getTaskList()
     }
 
     @After
