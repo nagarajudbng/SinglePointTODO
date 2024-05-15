@@ -7,9 +7,9 @@ import com.single.core.data.database.Todo
 import com.single.core.presentation.FieldStatus
 import com.single.core.presentation.StandardTextFieldState
 import com.single.core.presentation.UiEvent
-import com.single.todocreate.domine.usecases.DescriptionUseCase
+import com.single.todocreate.domine.usecases.DescriptionValidationUseCase
 import com.single.todocreate.domine.usecases.TaskUseCase
-import com.single.todocreate.domine.usecases.TitleUseCase
+import com.single.todocreate.domine.usecases.TitleValidationUseCase
 import com.single.todocreate.domine.util.InputStatus
 import com.single.todocreate.domine.util.TaskResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,8 +23,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TodoViewModel @Inject constructor(
-    private var titleUseCase: TitleUseCase,
-    private var descriptionUseCase: DescriptionUseCase,
+    private var titleUseCase: TitleValidationUseCase,
+    private var descriptionUseCase: DescriptionValidationUseCase,
     private var taskUseCase: TaskUseCase
 ):ViewModel(){
 
