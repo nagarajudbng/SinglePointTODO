@@ -2,6 +2,7 @@ package com.single.core.data
 import com.single.core.data.database.AppDatabase
 import com.single.core.data.database.Todo
 import com.single.core.data.database.TodoDao
+import com.single.core.data.repository.ToDoRepositoryImpl
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
@@ -22,49 +23,49 @@ class TodoRepositoryImplTest {
     private lateinit var appDatabase: AppDatabase
 
     @Mock
-    private lateinit var taskDao: TodoDao
+    private lateinit var todoDao: TodoDao
 
     @InjectMocks
-    private lateinit var repository: com.single.core.data.TaskRepositoryImpl
+    private lateinit var repository: ToDoRepositoryImpl
 
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
     }
     @Test
-    fun testAddTask()=runBlockingTest{
-        var task = Todo(title = "Title", description = "Description")
-        var id:Long = 1L
-        `when` (appDatabase.taskDao).thenReturn(taskDao)
-        `when`(taskDao.insertTask(task)).thenReturn(id)
-        var  taskId = repository.insertTask(task)
-        assertEquals(id,taskId)
+    fun testAddToDo()=runBlockingTest{
+        val todo = Todo(title = "Title", description = "Description")
+        val id:Long = 1L
+        `when` (appDatabase.todoDao).thenReturn(todoDao)
+        `when`(todoDao.insertToDo(todo)).thenReturn(id)
+        val todoId = repository.insertToDo(todo)
+        assertEquals(id,todoId)
     }
     @Test(expected = Exception::class)
-    fun testAddTaskThrowException() = runBlocking {
-        val task = Todo(id = 1, title = "Error", description = "Test Task")
-        val exceptionMessage = "Error inserting task"
+    fun testAddTodoThrowException() = runBlocking {
+        val todo = Todo(id = 1, title = "Error", description = "Test todo")
+        val exceptionMessage = "Error inserting todo"
         val  exception = Exception(exceptionMessage)
-        `when`(appDatabase.taskDao).thenReturn(taskDao)
-        `when`(taskDao.insertTask(task)).thenThrow(exception)
+        `when`(appDatabase.todoDao).thenReturn(todoDao)
+        `when`(todoDao.insertToDo(todo)).thenThrow(exception)
 
-        val e = repository.insertTask(task)
+        val e = repository.insertToDo(todo)
         assertEquals(e,exception)
 
     }
 
     @Test
-    fun testGetTaskList() = runBlocking {
-        var taskList = listOf(
-            Todo(id = 1, title = "title 1", description = "Test Task"),
-            Todo(id = 2, title = "title 2", description = "Test Task"),
-            Todo(id = 3, title = "title 3", description = "Test Task")
+    fun testGetToDoList() = runBlocking {
+        val todoList = listOf(
+            Todo(id = 1, title = "title 1", description = "Test todo"),
+            Todo(id = 2, title = "title 2", description = "Test todo"),
+            Todo(id = 3, title = "title 3", description = "Test todo")
         )
-        `when`(appDatabase.taskDao).thenReturn(taskDao)
-        `when`(taskDao.getTaskList()).thenReturn(flowOf(taskList))
-        val list = repository.getTaskList()
+        `when`(appDatabase.todoDao).thenReturn(todoDao)
+        `when`(todoDao.getToDoList()).thenReturn(flowOf(todoList))
+        val list = repository.getToDoList()
 
-        verify(appDatabase.taskDao).getTaskList()
-        assertEquals(taskList, list.first())
+        verify(appDatabase.todoDao).getToDoList()
+        assertEquals(todoList, list.first())
     }
 }

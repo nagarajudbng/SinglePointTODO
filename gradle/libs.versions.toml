@@ -1,5 +1,6 @@
 [versions]
 agp = "8.2.0"
+guava = "28.0-android"
 kotlin = "1.9.0"
 core-ktx = "1.13.1"
 junit = "4.13.2"
@@ -19,10 +20,12 @@ hilt-navigation-compose ="1.0.0-beta01"
 kotlinx-coroutines-test="1.5.2"
 appcompat = "1.6.1"
 material = "1.10.0"
+appsearch = "1.1.0-alpha03"
 
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+guava = { module = "com.google.guava:guava", version.ref = "guava" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
@@ -54,6 +57,10 @@ kotlinx-coroutines-test= { group = "org.jetbrains.kotlinx", name = "kotlinx-coro
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
+
+#appsearch = { group = "androidx.appsearch:appsearch", name = "appsearch", version.ref = "appsearch" }
+#appsearch-compiler = { group = "androidx.appsearch:appsearch", name = "appsearch-compiler", version.ref = "appsearch" }
+#appsearch-local-storage = { group = "androidx.appsearch:appsearch", name = "appsearch-local-storage", version.ref = "appsearch" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

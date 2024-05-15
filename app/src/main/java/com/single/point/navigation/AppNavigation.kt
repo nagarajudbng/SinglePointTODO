@@ -4,9 +4,9 @@ package com.single.point.navigation
 
 enum class Screen{
     HOME,
-    ADD_TASK
+    ADD_TODO
 }
 sealed class NavigationItem(val route:String){
     data object HOME: NavigationItem(Screen.HOME.name)
-    data object ADDTASK: NavigationItem(Screen.ADD_TASK.name)
+    data object ADDTODO: NavigationItem(Screen.ADD_TODO.name)
 }

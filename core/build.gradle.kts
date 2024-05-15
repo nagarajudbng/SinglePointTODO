@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     kotlin("kapt")
     alias(libs.plugins.hilt)
+
 }
 
 android {
@@ -67,4 +68,12 @@ dependencies {
     testImplementation(libs.mockito.inline)
 //coroutine test
     testImplementation(libs.kotlinx.coroutines.test)
+
+    //Search
+//    implementation(libs.appsearch)
+//    kapt(libs.appsearch.compiler)
+//    implementation(libs.appsearch.local.storage)
+
+    implementation(libs.guava)
+
 }

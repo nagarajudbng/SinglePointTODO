@@ -16,5 +16,5 @@ dependencyResolutionManagement {
 rootProject.name = "MainActivity"
 include(":app")
 include(":core")
-include(":todocreate")
-include(":todohome")
+include(":feature_todocreate")
+include(":feature_todohome")
