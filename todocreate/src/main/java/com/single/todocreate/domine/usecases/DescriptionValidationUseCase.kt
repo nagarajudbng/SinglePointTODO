@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 
 // Created by Nagaraju on 15/05/24.
-class DescriptionUseCase @Inject constructor(){
+class DescriptionValidationUseCase @Inject constructor(){
 
     operator fun invoke(description: String): TaskResult {
         var descriptionStatus: InputStatus? = null

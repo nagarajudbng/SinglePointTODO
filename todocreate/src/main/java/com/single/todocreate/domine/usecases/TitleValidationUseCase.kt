@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 
 // Created by Nagaraju on 15/05/24.
-class TitleUseCase @Inject constructor(){
+class TitleValidationUseCase @Inject constructor(){
 
     operator fun invoke(title: String): TaskResult {
         if (title.contains("Error")) {
