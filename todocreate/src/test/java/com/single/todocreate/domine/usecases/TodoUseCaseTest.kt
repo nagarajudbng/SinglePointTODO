@@ -1,6 +1,6 @@
 package com.single.todocreate.domine.usecases
 
-import com.single.core.data.database.Todo
+import com.single.core.domain.model.ToDoDomain
 import com.single.todocreate.domine.util.TaskResult
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
@@ -27,11 +27,11 @@ class TodoUseCaseTest{
 
     @Test
     fun insertTask() = runBlockingTest {
-        var task = Todo(title = "Title", description = "Description")
-        var taskResult = TaskResult(result = 1L)
-        var id:Long = 1L
+        val task = ToDoDomain(title = "Title", description = "Description")
+        val taskResult = TaskResult(result = 1L)
+        val id:Long = 1L
         `when`(repository.insertTask(task)).thenReturn(id)
-        var result = taskUseCase.insertTask(task)
+        val result = taskUseCase.insertTask(task)
         assertEquals(taskResult,result)
     }
 

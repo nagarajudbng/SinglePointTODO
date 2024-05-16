@@ -2,7 +2,10 @@ package com.single.core.di
 
 import android.content.Context
 import androidx.room.Room
+import com.single.core.data.TaskRepositoryImpl
 import com.single.core.data.database.AppDatabase
+import com.single.core.data.database.TodoDao
+import com.single.core.domain.repository.TaskRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,10 +16,17 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
     @Provides
     @Singleton
-    fun providesTaskRepositoryImpl(database: AppDatabase): com.single.core.domain.repository.TaskRepository {
-        return com.single.core.data.TaskRepositoryImpl(database)
+    fun providesTodoDao(database: AppDatabase):TodoDao{
+        return database.taskDao
+    }
+
+    @Provides
+    @Singleton
+    fun providesTaskRepositoryImpl(todoDao: TodoDao): TaskRepository {
+        return TaskRepositoryImpl(todoDao)
     }
     @Provides
     @Singleton

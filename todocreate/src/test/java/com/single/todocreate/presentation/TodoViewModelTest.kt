@@ -1,6 +1,7 @@
 package com.single.todocreate.presentation
 
-import com.single.core.data.database.Todo
+import com.single.core.presentation.mapper.toToDoDomain
+import com.single.core.presentation.model.ToDoUi
 import com.single.todocreate.domine.util.TaskResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -34,20 +35,20 @@ class TodoViewModelTest {
 
     @Test
     fun testInsertTaskSuccess()= runBlockingTest{
-        var task = Todo(title = "Title", description = "Description")
+        var task = ToDoUi(title = "Title", description = "Description")
         var taskResult = TaskResult(result = 1L)
-        `when`(taskUseCase.insertTask(task)).thenReturn(taskResult)
+        `when`(taskUseCase.insertTask(task.toToDoDomain())).thenReturn(taskResult)
         var result = todoViewModel.insertTask(task)
         Assert.assertEquals(taskResult, result)
     }
     @Test
     fun testInsertTaskError()= runBlockingTest{
-        var task = Todo(title = "Error", description = "Description")
+        var task = ToDoUi(title = "Error", description = "Description")
         var taskResult = TaskResult(
             isValid = false,
             title = null
         )
-        `when`(taskUseCase.insertTask(task)).thenReturn(taskResult)
+        `when`(taskUseCase.insertTask(task.toToDoDomain())).thenReturn(taskResult)
         var result = todoViewModel.insertTask(task)
         Assert.assertEquals(com.single.core.presentation.FieldStatus.FieldEmpty, result.title)
         Assert.assertEquals(false, result.isValid)

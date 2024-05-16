@@ -1,6 +1,6 @@
 package com.single.todocreate.domine.usecases
 
-import com.single.core.data.database.Todo
+import com.single.core.domain.model.ToDoDomain
 import com.single.todocreate.domine.util.InputStatus
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations
 class TitleUseCaseTest{
 
     @InjectMocks
-    private lateinit var taskUseCase: TitleUseCase
+    private lateinit var taskUseCase: TitleValidationUseCase
 
     @Mock
     private lateinit var repository: com.single.core.data.TaskRepositoryImpl
@@ -37,14 +37,14 @@ class TitleUseCaseTest{
 
     @Test
     fun titleValidateWithError()= runBlockingTest{
-        var task = Todo(title = "", description = "Description")
+        var task = ToDoDomain(title = "", description = "Description")
         var result = task.title?.let { taskUseCase(it) }
         assertEquals(InputStatus.EMPTY,result?.title)
         assertNotEquals(InputStatus.VALID, result?.title)
     }
     @Test
     fun titleValidateWithShortText()= runBlockingTest {
-        var task = Todo(title = "Hello", description = "Description")
+        var task = ToDoDomain(title = "Hello", description = "Description")
         var result = task.title?.let { taskUseCase(it) }
         assertEquals(InputStatus.LENGTH_TOO_SHORT, result?.title)
         assertNotEquals(InputStatus.VALID, result?.title)
@@ -52,7 +52,7 @@ class TitleUseCaseTest{
 
     @Test
     fun titleValidateWithSuccess()= runBlockingTest {
-        var task = Todo(title = "Hello Nagaraju", description = "Description")
+        var task = ToDoDomain(title = "Hello Nagaraju", description = "Description")
         var result = task.title?.let { taskUseCase(it) }
         assertNotEquals(InputStatus.EMPTY, result?.title)
         assertNotEquals(InputStatus.LENGTH_TOO_SHORT, result?.title)

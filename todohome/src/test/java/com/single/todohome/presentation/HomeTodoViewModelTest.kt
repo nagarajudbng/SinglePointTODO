@@ -1,23 +1,25 @@
 package com.single.todohome.presentation
 
-import com.single.core.data.database.Todo
+import com.single.core.domain.model.ToDoDomain
 import com.single.todohome.domain.usecases.ToDoSearchUseCase
 import com.single.todohome.domain.usecases.TodoGetListUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
 // Created by Nagaraju Deshetty on 08/05/24.
+@ExperimentalCoroutinesApi
+
 class HomeTodoViewModelTest{
     @Mock
     private lateinit var todoGetListUseCase: TodoGetListUseCase
@@ -28,6 +30,7 @@ class HomeTodoViewModelTest{
     @InjectMocks
     private lateinit var homeTodoViewModel: HomeTodoViewModel
 
+    private val testDispatcher = TestCoroutineDispatcher()
     @Before
     fun setUp(){
         MockitoAnnotations.initMocks(this)
@@ -35,17 +38,13 @@ class HomeTodoViewModelTest{
     }
     @Test
     fun testGetTaskList()= runBlockingTest {
-        var taskList = listOf(
-            Todo(id = 1, title = "title 1", description = "Test Task"),
-            Todo(id = 2, title = "title 2", description = "Test Task"),
-            Todo(id = 3, title = "title 3", description = "Test Task")
+        val taskList = listOf(
+            ToDoDomain(id = 1, title = "title 1", description = "Test Task"),
+            ToDoDomain(id = 2, title = "title 2", description = "Test Task"),
+            ToDoDomain(id = 3, title = "title 3", description = "Test Task")
         )
-        Mockito.`when` (todoGetListUseCase()).thenReturn(flowOf(taskList))
+        `when` (todoGetListUseCase()).thenReturn(flowOf(taskList))
         var list = homeTodoViewModel.getTaskList()
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
+        verify(todoGetListUseCase).invoke()
     }
 }

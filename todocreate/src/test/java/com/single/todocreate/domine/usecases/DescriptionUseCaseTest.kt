@@ -1,6 +1,7 @@
 package com.single.todocreate.domine.usecases
 
-import com.single.core.data.database.Todo
+import com.single.core.data.TaskRepositoryImpl
+import com.single.core.domain.model.ToDoDomain
 import com.single.todocreate.domine.util.InputStatus
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
@@ -14,10 +15,10 @@ import org.mockito.MockitoAnnotations
 class DescriptionUseCaseTest{
 
     @InjectMocks
-    private lateinit var descriptionUseCase: DescriptionUseCase
+    private lateinit var descriptionUseCase: DescriptionValidationUseCase
 
     @Mock
-    private lateinit var repository: com.single.core.data.TaskRepositoryImpl
+    private lateinit var repository: TaskRepositoryImpl
 
     @Before
     fun startUP(){
@@ -36,13 +37,13 @@ class DescriptionUseCaseTest{
 
     @Test
     fun descriptionValidateWithError()= runBlockingTest{
-        var task = Todo(title = "", description = "")
+        var task = ToDoDomain(title = "", description = "")
         var result = task.description?.let { descriptionUseCase(it) }
         assertEquals(InputStatus.EMPTY,result?.description)
     }
     @Test
     fun taskValidateWithSuccess()= runBlockingTest {
-        var task = Todo(title = "Hello", description = "Description")
+        var task = ToDoDomain(title = "Hello", description = "Description")
         var result = task.description?.let { descriptionUseCase(it) }
         assertEquals(InputStatus.VALID, result?.description)
     }

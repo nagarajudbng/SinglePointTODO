@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 interface TodoDao {
     @Insert
     suspend fun insertTask(task: Todo):Long
-    @Query("SELECT * FROM Task")
+    @Query("SELECT * FROM Task ORDER BY id DESC")
     fun getTaskList(): Flow<List<Todo>>
 
     @Query("SELECT * FROM Task WHERE title LIKE '%' || :searchQuery || '%'")
