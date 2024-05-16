@@ -44,7 +44,7 @@ const val searchBoxHeight = 60f
 
 @Preview
 @Composable
-fun searchBarPreview() {
+fun SearchBarPreview() {
     SearchBar(
         Modifier.padding(horizontal = 16.dp),
         onSearchTextEntered = {
@@ -74,11 +74,11 @@ fun SearchBar(
     searchQuery: String,
     onFocusState: Boolean
 ) {
-    var textState = searchQuery
-    var focusState = onFocusState
+    val textState = searchQuery
+    val focusState = onFocusState
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
-    startSearchAfterDelay(onSearchStart,searchQuery)
+    StartSearchAfterDelay(onSearchStart,searchQuery)
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
     }
@@ -178,7 +178,7 @@ fun SearchBar(
     }
 }
 @Composable
-fun startSearchAfterDelay(
+fun StartSearchAfterDelay(
     onSearchStart: (String) -> Unit,
     searchQuery: String,
 ) {

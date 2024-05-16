@@ -3,10 +3,11 @@ package com.single.todocreate.presentation
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.single.core.data.database.Todo
 import com.single.core.presentation.FieldStatus
 import com.single.core.presentation.StandardTextFieldState
 import com.single.core.presentation.UiEvent
+import com.single.core.presentation.mapper.toToDoDomain
+import com.single.core.presentation.model.ToDoUi
 import com.single.todocreate.domine.usecases.DescriptionValidationUseCase
 import com.single.todocreate.domine.usecases.TaskUseCase
 import com.single.todocreate.domine.usecases.TitleValidationUseCase
@@ -95,11 +96,11 @@ class TodoViewModel @Inject constructor(
                     )
                     if(titleResult.title ==InputStatus.VALID && descriptionResult.description == InputStatus.VALID)
                     {
-                        val task = Todo(
+                        val task = ToDoUi(
                             title = _titleState.value.text, description = _descState
                                 .value.text
                         )
-                        val taskResult = taskUseCase.insertTask(task = task)
+                        val taskResult = taskUseCase.insertTask(task = task.toToDoDomain())
                         taskResult.result?.let {
                             if(it>0){
                                 _dialogState.value = true
@@ -113,8 +114,8 @@ class TodoViewModel @Inject constructor(
 
     }
 
-    suspend fun insertTask(task: Todo): TaskResult {
-     return  taskUseCase.insertTask(task)
+    suspend fun insertTask(task: ToDoUi): TaskResult {
+     return  taskUseCase.insertTask(task.toToDoDomain())
     }
 
 

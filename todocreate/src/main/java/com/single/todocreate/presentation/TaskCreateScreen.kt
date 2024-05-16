@@ -45,6 +45,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.single.core.presentation.FieldStatus
 import com.single.core.presentation.SharedViewModel
+import com.single.core.presentation.UiEvent
 import com.single.core.presentation.util.asString
 import com.single.todocreate.R
 import kotlinx.coroutines.delay
@@ -75,14 +76,14 @@ fun TaskCreateScreen(
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
-                is com.single.core.presentation.UiEvent.NavigateUp -> {
+                is UiEvent.NavigateUp -> {
                     sharedViewModel.messageState.value = event.message
                     onNavigation("Back")
                 }
-                is com.single.core.presentation.UiEvent.ShowSnackBar -> {
+                is UiEvent.ShowSnackBar -> {
                     onSnackBarMessage(event.uiText.asString(context))
                 }
-                is com.single.core.presentation.UiEvent.Message -> {
+                is UiEvent.Message -> {
 //                    sharedViewModel.messageState.value = event.message
                 }
                 else -> {}

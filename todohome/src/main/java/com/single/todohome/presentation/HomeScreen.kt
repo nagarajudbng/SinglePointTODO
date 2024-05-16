@@ -33,7 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.single.core.data.database.Todo
+import com.single.core.domain.model.ToDoDomain
 import com.single.core.presentation.SharedViewModel
 import com.single.core.presentation.util.asString
 import com.single.todohome.R
@@ -95,7 +95,7 @@ fun HomeScreen(
                     bottom = it.calculateBottomPadding()
                 )
         ) {
-            showTodoList(viewModel)
+            ShowTodoList(viewModel)
         }
     }
 }
@@ -136,9 +136,9 @@ fun TopBarView(viewModel: HomeTodoViewModel){
     }
 }
 @Composable
-fun showTodoList(viewModel: HomeTodoViewModel){
+fun ShowTodoList(viewModel: HomeTodoViewModel){
 
-    var todoList = viewModel.todoList.value
+    val todoList = viewModel.todoList.value
     if(todoList.size>0) {
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
@@ -165,10 +165,10 @@ fun showTodoList(viewModel: HomeTodoViewModel){
 @Preview
 @Composable
 fun ListItemPreview(){
-    ListItem(Todo(title = "Hello", description = "Description"))
+    ListItem(ToDoDomain(title = "Hello", description = "Description"))
 }
 @Composable
-fun ListItem(task: Todo){
+fun ListItem(task: ToDoDomain){
 
     Card(
         modifier = Modifier

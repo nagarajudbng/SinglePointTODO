@@ -1,6 +1,6 @@
 package com.single.todocreate.domine.util
 
-import com.single.core.domine.repository.RowId
+import com.single.core.domain.repository.RowId
 
 // Created by Nagaraju Deshetty on 07/05/
 

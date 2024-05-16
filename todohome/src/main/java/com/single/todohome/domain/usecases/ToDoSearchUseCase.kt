@@ -1,7 +1,7 @@
 package com.single.todohome.domain.usecases
 
-import com.single.core.data.database.Todo
-import com.single.core.domine.repository.TaskRepository
+import com.single.core.domain.model.ToDoDomain
+import com.single.core.domain.repository.TaskRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -9,7 +9,7 @@ import javax.inject.Inject
 class ToDoSearchUseCase @Inject constructor(
     private val repository: TaskRepository
 ) {
-     suspend operator fun invoke(query: String): Flow<List<Todo>> {
+     suspend operator fun invoke(query: String): Flow<List<ToDoDomain>> {
         return  repository.searchQuery(query)
     }
 }

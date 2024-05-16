@@ -15,7 +15,7 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun providesTaskRepositoryImpl(database: AppDatabase): com.single.core.domine.repository.TaskRepository {
+    fun providesTaskRepositoryImpl(database: AppDatabase): com.single.core.domain.repository.TaskRepository {
         return com.single.core.data.TaskRepositoryImpl(database)
     }
     @Provides
