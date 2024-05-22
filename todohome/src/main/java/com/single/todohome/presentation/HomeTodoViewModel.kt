@@ -23,7 +23,7 @@ class HomeTodoViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<com.single.core.presentation.UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-   private val _todoList = mutableStateOf<List<ToDoDomain>>(emptyList())
+    private val _todoList = mutableStateOf<List<ToDoDomain>>(emptyList())
     val todoList = _todoList
 
     private val _searchQuery = mutableStateOf("")
@@ -35,10 +35,6 @@ class HomeTodoViewModel @Inject constructor(
     private val _topBarState = mutableStateOf(false)
     val topBarState = _topBarState
 
-
-//    init{
-//        getTaskList()
-//    }
 
     fun onSearchEvent(event: SearchEvent){
 
